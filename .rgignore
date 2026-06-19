@@ -1,0 +1,14 @@
+.git/
+.omx/logs/
+.omx/state/
+.omx/metrics.json
+.obsidian/workspace.json
+docs/_obsidian/property-values/**
+docs/00-governance/obsidian-property-values/**
+docs/_templates/**
+__pycache__/
+.pytest_cache/
+*.pptx
+*.xlsx
+*.png
+*.jpg

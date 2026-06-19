@@ -1,0 +1,28 @@
+--smart-case
+--line-number
+--column
+--heading
+--max-columns=220
+--max-columns-preview
+--glob=!node_modules/**
+--glob=!target/**
+--glob=!build/**
+--glob=!dist/**
+--glob=!coverage/**
+--glob=!logs/**
+--glob=!tmp/**
+--glob=!.pytest-tmp/**
+--glob=!.omx/logs/**
+# ripgrep file types are extension-oriented. Path/domain scoped searches
+# stay in tools/kb.ps1 commands such as grounding, docs, workspace, specs,
+# trace, context, and sync-check.
+--type-add
+sddmd:*.md
+--type-add
+sddyaml:*.yaml
+--type-add
+sddyaml:*.yml
+--type-add
+sddjson:*.json
+--type-add
+sddspec:*.{md,yaml,yml,json}

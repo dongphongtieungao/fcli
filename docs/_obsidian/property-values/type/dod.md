@@ -1,0 +1,44 @@
+---
+id: seed-type-dod
+title: 'type: dod'
+type: governance
+category: governance
+status: published
+owner: runbook
+domain: runbook
+project: ftransform
+workspace: docs
+created: '2026-04-30'
+updated: 2026-05-14
+sensitivity: internal
+truth_level: official
+source_policy: reference_only
+source_of_truth:
+- docs/grounding/manifest.md
+- docs/00-governance/metadata-schema.md
+- docs/00-governance/taxonomy.md
+related:
+- docs/06-quality-assurance/14.qa-matrix.md
+- docs/07-ci-cd-review/16.review-checklists.md
+- docs/09-runbook/18.dod.md
+- docs/grounding/manifest.md
+upstream: []
+downstream: []
+tags:
+  - kms/governance
+  - kms/metadata
+  - sdd/reusable
+  - sdd/generic
+- kms/metadata
+- kms/taxonomy
+- kms/obsidian
+---
+# type: dod
+
+## Purpose
+
+Seed note for Obsidian property value suggestions.
+
+## Related
+
+- [taxonomy.md](../../../00-governance/taxonomy.md)

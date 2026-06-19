@@ -1,0 +1,3 @@
+{"id":"golden-001","query":"Mô tả quy trình cập nhật Grounding Pack và khi nào cần re-eval?","expected_citations":[{"source_id":"grounding-manifest","min_segments":1},{"source_id":"datagov-07","min_segments":1}],"gold_answer":"Quy trình: đề xuất→review→version→re-index→re-eval. Re-eval khi thay đổi prompts/manifest/sources/tool I/O/spec.","domain":"governance"}
+{"id":"golden-002","query":"Quy tắc tối thiểu về số lượng trích dẫn và ngưỡng faithfulness là gì?","expected_citations":[{"source_id":"evals-config","min_segments":1},{"source_id":"governance-rules-13","min_segments":1}],"gold_answer":"Tối thiểu 2 citations hợp lệ; faithfulness ≥ 0.75 (có thể điều chỉnh theo dự án).","domain":"guardrails"}
+

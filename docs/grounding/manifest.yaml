@@ -1,0 +1,803 @@
+version: "0.2.1"
+project: ftransform
+status: published
+updated: "2026-05-14"
+description: "Starter repository grounding registry. This file is intentionally domain-neutral but must remain populated so agents can route work to reusable source-of-truth layers."
+
+source_groups:
+  agent_policy:
+    description: "Agent operating contracts and path-specific rules."
+    paths:
+      - AGENTS.md
+      - docs/AGENTS.md
+      - GEMINI.md
+      - .agent/rules/
+  governance:
+    description: "KMS metadata, taxonomy, data governance, and reusable governance rules."
+    paths:
+      - docs/00-governance/
+  requirements:
+    description: "Requirement, business requirement, and use-case artifacts."
+    paths:
+      - docs/01-requirements/
+  architecture:
+    description: "Glossary, vision, C4, NFR, ADR, standards, and project structure."
+    paths:
+      - docs/02-architecture/
+  business_analysis:
+    description: "Business glossary, BPMN, BA notes, and workflow analysis."
+    paths:
+      - docs/03-business-analysis/
+  specs_contracts:
+    description: "API, application, schema, contract, and spec-test artifacts."
+    paths:
+      - docs/04-spec-test/
+      - specs/
+  environment:
+    description: "Environment and setup guidance."
+    paths:
+      - docs/05-environment-setup/
+  quality:
+    description: "QA matrix, prompt guardrails, quality matrix, and review checklist."
+    paths:
+      - docs/06-quality-assurance/
+      - docs/07-ci-cd-review/
+  runbook_release:
+    description: "DoR, DoD, runbook, handover, release, rollback, and evidence packs."
+    paths:
+      - docs/09-runbook/
+      - docs/10-release/
+  methodology:
+    description: "Spec First, KMS, task lifecycle, verification, and agent workflow methodology."
+    paths:
+      - docs/methodology/
+  grounding:
+    description: "Manifest, sources, prompts, evals, and grounding skills."
+    paths:
+      - docs/grounding/
+  antigravity:
+    description: "Antigravity adapter bridge, rules, playbook, and skill wrappers for the reusable SDD workflow."
+    paths:
+      - GEMINI.md
+      - .agent/rules/
+      - .agent/skills/
+      - docs/antigravity/
+  workspace:
+    description: "Workspace-only notes and task memory. Not official source of truth."
+    paths:
+      - llm-wiki/
+
+sources:
+  - source_id: root-agent-policy
+    path: AGENTS.md
+    type: agent_policy
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - repository-policy
+      - agent-workflow
+      - safety
+    usage_rule: "Read before code or documentation changes."
+
+  - source_id: docs-agent-policy
+    path: docs/AGENTS.md
+    type: agent_policy
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - documentation
+      - kms
+      - markdown
+      - traceability
+    usage_rule: "Read before creating, editing, moving, promoting, or deleting files under docs/."
+
+  - source_id: kms-metadata-schema
+    path: docs/00-governance/metadata-schema.md
+    type: governance
+    owner: governance
+    truth_level: official
+    status: published
+    coverage:
+      - metadata
+      - frontmatter
+      - obsidian-properties
+    usage_rule: "Use when normalizing Markdown metadata or validating KMS properties."
+
+  - source_id: kms-taxonomy
+    path: docs/00-governance/taxonomy.md
+    type: governance
+    owner: governance
+    truth_level: official
+    status: published
+    coverage:
+      - taxonomy
+      - controlled-values
+      - document-types
+    usage_rule: "Use when choosing document type, category, status, truth level, or tags."
+
+  - source_id: data-governance-baseline
+    path: docs/00-governance/00.data-governance.md
+    type: governance
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - data-governance
+      - classification
+      - retention
+      - auditability
+    usage_rule: "Use when a task introduces data sources, retention rules, classification, or data quality expectations."
+
+  - source_id: governance-rules-baseline
+    path: docs/00-governance/00.governance-rules.md
+    type: governance
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - governance-rules
+      - source-of-truth
+      - repository-controls
+    usage_rule: "Use when changing repository governance or source-of-truth handling."
+
+  - source_id: patterns-anti-patterns-baseline
+    path: docs/00-governance/00.patterns-anti-patterns.md
+    type: governance
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - patterns
+      - anti-patterns
+      - cleanup-lessons
+    usage_rule: "Use when evaluating reusable practices or avoiding known documentation cleanup mistakes."
+
+  - source_id: requirements-index
+    path: docs/01-requirements/00.requirement.md
+    type: requirement
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - requirements
+      - scope
+    usage_rule: "Use for active requirement index and requirement promotion targets."
+
+  - source_id: business-requirements
+    path: docs/01-requirements/00.final-business-requirements.md
+    type: requirement
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - business-requirements
+    usage_rule: "Use when a requirement has been approved as business-facing scope."
+
+  - source_id: use-cases
+    path: docs/01-requirements/01.use-cases.md
+    type: use_case
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - use-cases
+      - acceptance-drafts
+    usage_rule: "Use when mapping requirements to actors, flows, and acceptance criteria."
+
+  - source_id: architecture-glossary
+    path: docs/02-architecture/02.glossary.md
+    type: glossary
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - terminology
+      - bounded-context
+    usage_rule: "Use when a task introduces or changes core terminology."
+
+  - source_id: architecture-vision
+    path: docs/02-architecture/03.vision.md
+    type: vision
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - vision
+      - goals
+      - non-goals
+    usage_rule: "Use when project goals, scope, or direction need grounding."
+
+  - source_id: architecture-c4
+    path: docs/02-architecture/04.architecture-c4.md
+    type: architecture_c4
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - c4
+      - component-boundaries
+    usage_rule: "Use when architecture boundaries, containers, or components are affected."
+
+  - source_id: architecture-nfr
+    path: docs/02-architecture/05.nfr.md
+    type: nfr
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - non-functional-requirements
+    usage_rule: "Use when performance, security, reliability, scalability, or operability constraints are affected."
+
+  - source_id: architecture-adr
+    path: docs/02-architecture/06.adr.md
+    type: adr
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - decisions
+      - tradeoffs
+    usage_rule: "Use when architectural decisions or alternatives need to be recorded."
+
+  - source_id: architecture-standards
+    path: docs/02-architecture/08.standards.md
+    type: standards
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - standards
+      - coding-guidance
+    usage_rule: "Use when coding, review, architecture, or documentation standards are affected."
+
+  - source_id: business-glossary
+    path: docs/03-business-analysis/02.glossary.md
+    type: glossary
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - business-terms
+    usage_rule: "Use when business terminology or actor definitions change."
+
+  - source_id: business-bpmn
+    path: docs/03-business-analysis/09.bpmn.md
+    type: bpmn
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - business-flow
+      - workflow
+    usage_rule: "Use when behavior, workflow, happy path, or error path changes."
+
+  - source_id: spec-jsonschema-governance
+    path: docs/04-spec-test/11.governance-jsonschema-rules.md
+    type: contract_spec
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - json-schema
+      - contract-governance
+    usage_rule: "Use when JSON schemas or schema validation rules are introduced."
+
+  - source_id: spec-spectral-governance
+    path: docs/04-spec-test/12.governance-spectral.md
+    type: contract_spec
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - openapi
+      - api-lint
+    usage_rule: "Use when OpenAPI or API lint rules are introduced."
+
+  - source_id: prompt-guardrails
+    path: docs/06-quality-assurance/13.prompt-guardrails.md
+    type: prompt_guardrails
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - prompt-guardrails
+      - agent-quality
+    usage_rule: "Use when prompt behavior, agent controls, or generated-output quality is affected."
+
+  - source_id: qa-matrix
+    path: docs/06-quality-assurance/14.qa-matrix.md
+    type: qa_matrix
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - qa
+      - verification
+      - evidence
+    usage_rule: "Use when choosing verification checks or reporting validation status."
+
+  - source_id: quality-matrix
+    path: docs/07-ci-cd-review/15.quality-matrix.md
+    type: quality_matrix
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - quality
+      - ci
+      - gates
+    usage_rule: "Use when quality gates or CI expectations change."
+
+  - source_id: review-checklists
+    path: docs/07-ci-cd-review/16.review-checklists.md
+    type: review_checklist
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - review
+      - checklist
+    usage_rule: "Use when review expectations or release review criteria change."
+
+  - source_id: definition-of-ready
+    path: docs/09-runbook/17.dor.md
+    type: dor
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - readiness
+      - planning-gate
+    usage_rule: "Use before starting implementation or release work."
+
+  - source_id: definition-of-done
+    path: docs/09-runbook/18.dod.md
+    type: dod
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - done
+      - evidence
+      - completion-gate
+    usage_rule: "Use before claiming completion."
+
+  - source_id: release-case-study
+    path: docs/10-release/sdd-case-study-report.md
+    type: technical_note
+    owner: unknown
+    truth_level: draft
+    status: draft
+    coverage:
+      - release
+      - case-study
+      - evidence-outline
+    usage_rule: "Use as a reusable release or case-study evidence outline."
+
+  - source_id: grounding-manifest-human
+    path: docs/grounding/manifest.md
+    type: manifest
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - grounding
+      - source-precedence
+      - source-groups
+    usage_rule: "Use as human-readable grounding entrypoint."
+
+  - source_id: grounding-manifest-machine
+    path: docs/grounding/manifest.yaml
+    type: manifest
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - grounding
+      - source-registry
+      - source-ids
+    usage_rule: "Use for machine-readable source IDs, coverage, and routing."
+
+  - source_id: grounding-sources-catalog
+    path: docs/grounding/sources.md
+    type: source_catalog
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - source-catalog
+      - citations
+      - usage-rules
+    usage_rule: "Use when source IDs, citation coverage, or source usage rules are needed."
+
+  - source_id: prompt-governance-routing
+    path: docs/grounding/prompts.md
+    type: prompt_governance
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - prompt-routing
+      - agent-lanes
+      - prompt-contracts
+    usage_rule: "Use when selecting an agent work lane or updating prompt governance."
+
+  - source_id: prompt-application-architect
+    path: docs/grounding/prompts/prompt-application-architect.md
+    type: prompt_governance
+    owner: prompt-governance
+    truth_level: official
+    status: published
+    coverage:
+      - planning
+      - architecture
+      - reusable-software-development
+    usage_rule: "Use for planning, architecture, trade-off analysis, and acceptance framing before non-trivial implementation."
+
+  - source_id: prompt-application-coder
+    path: docs/grounding/prompts/prompt-application-coder.md
+    type: prompt_governance
+    owner: prompt-governance
+    truth_level: official
+    status: published
+    coverage:
+      - implementation
+      - tests
+      - reusable-software-development
+    usage_rule: "Use after grounding and scope are clear enough for implementation or test changes."
+
+  - source_id: prompt-application-debugger
+    path: docs/grounding/prompts/prompt-application-debugger.md
+    type: prompt_governance
+    owner: prompt-governance
+    truth_level: official
+    status: published
+    coverage:
+      - debugging
+      - root-cause-analysis
+      - minimal-fix
+    usage_rule: "Use for root-cause analysis and minimal fixes when a failure has reproducible evidence."
+
+  - source_id: prompt-application-interface
+    path: docs/grounding/prompts/application-interface.md
+    type: prompt_governance
+    owner: prompt-governance
+    truth_level: official
+    status: published
+    coverage:
+      - application-interface
+      - contract-design
+    usage_rule: "Use when designing reusable application interfaces across APIs, UI actions, jobs, libraries, or local tools."
+
+  - source_id: prompt-application-config
+    path: docs/grounding/prompts/application-config.md
+    type: prompt_governance
+    owner: prompt-governance
+    truth_level: official
+    status: published
+    coverage:
+      - configuration
+      - precedence
+      - validation
+    usage_rule: "Use when configuration fields, precedence, defaults, secrets handling, or settings validation are affected."
+
+  - source_id: prompt-application-runtime
+    path: docs/grounding/prompts/application-runtime.md
+    type: prompt_governance
+    owner: prompt-governance
+    truth_level: official
+    status: published
+    coverage:
+      - runtime
+      - workflow
+      - failure-modes
+    usage_rule: "Use when runtime entry points, execution flow, outputs, logging, or operational behavior are affected."
+
+  - source_id: prompt-application-logging
+    path: docs/grounding/prompts/application-logging.md
+    type: prompt_governance
+    owner: prompt-governance
+    truth_level: official
+    status: published
+    coverage:
+      - logging
+      - redaction
+      - observability
+    usage_rule: "Use when structured logging, redaction, notifications, or operational status reporting are affected."
+
+  - source_id: prompt-application-validation
+    path: docs/grounding/prompts/application-validation.md
+    type: prompt_governance
+    owner: prompt-governance
+    truth_level: official
+    status: published
+    coverage:
+      - validation
+      - evidence
+      - verification
+    usage_rule: "Use when validation evidence, warnings, artifacts, or verification status need to be resolved."
+
+  - source_id: grounding-evals
+    path: docs/grounding/evals.md
+    type: technical_note
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - evaluation
+      - grounding-quality
+    usage_rule: "Use when defining or reviewing grounding quality checks."
+
+  - source_id: task-workspace-methodology
+    path: docs/methodology/Task.md
+    type: methodology
+    owner: governance
+    truth_level: official
+    status: published
+    coverage:
+      - task-workspace
+      - llm-wiki
+      - promotion
+      - task-profiles
+    usage_rule: "Use for current task creation, task archival, and promotion planning."
+
+  - source_id: docs-readme
+    path: docs/README.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - documentation-index
+      - onboarding
+    usage_rule: "Use for orientation to the docs/ starter structure."
+
+  - source_id: starter-readme
+    path: README.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - onboarding
+      - starter-structure
+    usage_rule: "Use for repository orientation."
+
+  - source_id: antigravity-agent-bridge
+    path: GEMINI.md
+    type: agent_policy
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - agent-bridge
+      - repository-policy
+    usage_rule: "Read as the thin Antigravity/Gemini-facing bridge after AGENTS.md."
+
+  - source_id: antigravity-playbook
+    path: docs/antigravity/playbook.md
+    type: runbook
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - sdd-adapter
+      - agent-workflow
+    usage_rule: "Use when running Antigravity against the reusable SDD/KMS workflow."
+
+  - source_id: antigravity-sdd-rule
+    path: .agent/rules/sdd-antigravity.md
+    type: agent_policy
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - grounding
+      - verification
+      - drift-control
+    usage_rule: "Use as the Antigravity rule for grounding, retrieval, verification, and sync."
+
+  - source_id: antigravity-skill-sdd-request-intake
+    path: .agent/skills/sdd-request-intake/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - request-intake
+      - sdd
+    usage_rule: "Antigravity adapter for docs/grounding/skills/1.sdd-request-intake.md."
+
+  - source_id: antigravity-skill-kms-retrieval-context-pack
+    path: .agent/skills/kms-retrieval-context-pack/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - retrieval
+      - grounding
+    usage_rule: "Antigravity adapter for docs/grounding/skills/2.kms-retrieval-context-pack.md."
+
+  - source_id: antigravity-skill-prompt-lane-router
+    path: .agent/skills/prompt-lane-router/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - prompt-routing
+      - agent-lanes
+    usage_rule: "Antigravity adapter for docs/grounding/skills/3.prompt-lane-router.md."
+
+  - source_id: antigravity-skill-spec-acceptance-mapping
+    path: .agent/skills/spec-acceptance-mapping/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - acceptance
+      - traceability
+    usage_rule: "Antigravity adapter for docs/grounding/skills/4.spec-acceptance-mapping.md."
+
+  - source_id: antigravity-skill-code-boundary-file-role
+    path: .agent/skills/code-boundary-file-role/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - code-boundary
+      - file-role
+    usage_rule: "Antigravity adapter for docs/grounding/skills/5.code-boundary-file-role.md."
+
+  - source_id: antigravity-skill-evidence-verification
+    path: .agent/skills/evidence-verification/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - evidence
+      - verification
+    usage_rule: "Antigravity adapter for docs/grounding/skills/6.evidence-verification.md."
+
+  - source_id: antigravity-skill-kms-sync-drift-control
+    path: .agent/skills/kms-sync-drift-control/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - kms-sync
+      - drift-control
+    usage_rule: "Antigravity adapter for docs/grounding/skills/7.kms-sync-drift-control.md."
+
+  - source_id: antigravity-skill-archive-current-task
+    path: .agent/skills/archive-current-task/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - task-workspace
+      - archive
+    usage_rule: "Antigravity adapter for docs/grounding/skills/8.archive-current-task.md."
+
+  - source_id: antigravity-skill-create-current-task
+    path: .agent/skills/create-current-task/SKILL.md
+    type: guide
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - antigravity
+      - task-workspace
+      - task-creation
+    usage_rule: "Antigravity adapter for docs/grounding/skills/9.create-current-task.md."
+
+  - source_id: skill-plan-task
+    path: docs/grounding/skills/10.plan-task.md
+    type: methodology
+    owner: governance
+    truth_level: official
+    status: published
+    coverage:
+      - planning
+      - sdd-orchestration
+      - skill-coordination
+    usage_rule: "Use before non-trivial implementation to build a structured plan by orchestrating SDD skills."
+
+  - source_id: starter-openapi
+    path: specs/10.openapi.yaml
+    type: openapi
+    owner: unknown
+    truth_level: draft
+    status: draft
+    coverage:
+      - openapi
+      - api-contract-placeholder
+    usage_rule: "Use as a starter API contract placeholder only after project APIs are defined."
+
+  - source_id: starter-application-spec
+    path: docs/04-spec-test/application-spec.md
+    type: application_spec
+    owner: unknown
+    truth_level: draft
+    status: draft
+    coverage:
+      - application-interface
+      - contract-placeholder
+      - reusable-software-development
+    usage_rule: "Use as the active starter application interface placeholder; promote concrete operations only after requirements or architecture define them."
+
+  - source_id: starter-application-schema
+    path: specs/schemas/tools/application.schema.json
+    type: application_spec
+    owner: unknown
+    truth_level: draft
+    status: draft
+    coverage:
+      - application-schema
+      - tool-contract-placeholder
+    usage_rule: "Use as a starter application/tool schema placeholder only after project interfaces or operations are defined."
+
+prompts:
+  - id: prompt-planning
+    path: docs/grounding/prompts/prompt-application-architect.md
+    status: published
+    use_when: "Planning, architecture, or trade-off analysis is needed."
+
+  - id: prompt-implementation
+    path: docs/grounding/prompts/prompt-application-coder.md
+    status: published
+    use_when: "Code, test, or implementation changes are needed."
+
+  - id: prompt-debugging
+    path: docs/grounding/prompts/prompt-application-debugger.md
+    status: published
+    use_when: "A failure needs root-cause analysis."
+
+  - id: prompt-application-interface
+    path: docs/grounding/prompts/application-interface.md
+    status: published
+    use_when: "Application interface design or contract shape needs to be clarified."
+
+  - id: prompt-application-config
+    path: docs/grounding/prompts/application-config.md
+    status: published
+    use_when: "Configuration behavior, precedence, defaults, or validation are affected."
+
+  - id: prompt-application-runtime
+    path: docs/grounding/prompts/application-runtime.md
+    status: published
+    use_when: "Runtime workflow, routing, outputs, or failure modes are affected."
+
+  - id: prompt-application-logging
+    path: docs/grounding/prompts/application-logging.md
+    status: published
+    use_when: "Logging, redaction, observability, or notification behavior are affected."
+
+  - id: prompt-application-validation
+    path: docs/grounding/prompts/application-validation.md
+    status: published
+    use_when: "Validation, evidence, warnings, or artifact checks are affected."
+
+  - id: prompt-grounding-update
+    path: docs/grounding/prompts/prompt-grounding-update.md
+    status: published
+    use_when: "Official docs, source catalog, manifest, prompt routing, or grounding registry changes."

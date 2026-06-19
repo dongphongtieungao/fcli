@@ -1,0 +1,34 @@
+openapi: 3.1.0
+info:
+  title: New Project API
+  version: 0.1.0
+  description: >
+    Starter OpenAPI template for docs/04-spec-test. Copy or adapt this only
+    when the new project has an API contract to describe.
+servers: []
+tags:
+  - name: sdd/generic
+    description: Generic reusable SDD API template.
+  - name: sdd/template
+    description: Template marker; replace with project API tags when concrete operations exist.
+paths: {}
+components:
+  schemas: {}
+  responses: {}
+  parameters: {}
+  securitySchemes: {}
+x-template:
+  category: spec_test
+  status: draft
+  tags:
+    - sdd/openapi
+    - sdd/template
+    - sdd/reusable
+    - sdd/generic
+  source_of_truth:
+    - docs/grounding/manifest.yaml
+    - docs/grounding/sources.md
+    - docs/04-spec-test/12.governance-spectral.md
+  related:
+    - docs/04-spec-test/11.governance-jsonschema-rules.md
+    - docs/06-quality-assurance/14.qa-matrix.md

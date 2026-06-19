@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/tools/example.schema.json",
+  "title": "ExampleToolInput",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "query": { "type": "string", "minLength": 1 },
+    "limit": { "type": "integer", "minimum": 1, "default": 10 }
+  },
+  "required": ["query"]
+}
+

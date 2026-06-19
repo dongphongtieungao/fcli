@@ -1,0 +1,6 @@
+@startuml
+title C4 Context Template
+actor "User" as user
+rectangle "System Under Design" as system
+user --> system : Uses
+@enduml

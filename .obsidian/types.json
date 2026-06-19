@@ -1,0 +1,27 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "tags": "tags",
+    "cssclasses": "multitext",
+    "id": "text",
+    "title": "text",
+    "type": "text",
+    "category": "text",
+    "status": "text",
+    "owner": "text",
+    "domain": "text",
+    "project": "text",
+    "workspace": "text",
+    "created": "date",
+    "updated": "date",
+    "sensitivity": "text",
+    "truth_level": "text",
+    "source_policy": "text",
+    "confidence": "text",
+    "source_of_truth": "multitext",
+    "verified_against": "multitext",
+    "related": "multitext",
+    "upstream": "multitext",
+    "downstream": "multitext"
+  }
+}

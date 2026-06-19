@@ -1,0 +1,2 @@
+{"id":"reg-001","query":"Số citations tối thiểu là bao nhiêu?","expected_citations":[{"source_id":"evals-config","min_segments":1}],"gold_answer":"Ít nhất 2 citations hợp lệ theo cấu hình.","domain":"guardrails"}
+

@@ -1,0 +1,219 @@
+{
+  "main": {
+    "id": "2375a8b4596be68b",
+    "type": "split",
+    "children": [
+      {
+        "id": "0e99f943238788cf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ac726bae4b1d062f",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f4874c91f2480ad7",
+    "type": "split",
+    "children": [
+      {
+        "id": "83541e78ba0cf70c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9a41edd76d0c22db",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "66ae2cd17b63d47c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "LICENSE",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "89ff0dd0f53f1451",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ea6f403e4ff58899",
+    "type": "split",
+    "children": [
+      {
+        "id": "3cd0008aee661509",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "40ec8ec32dcec93c",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "dc1fa6ec41a83152",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "1e4ea80157e37d9f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "ff5c276ebdadcf40",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "9b21fa633b62fc94",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "ac726bae4b1d062f",
+  "lastOpenFiles": [
+    "docs/10-release/sdd-case-study-report.md",
+    "docs/methodology/o_5.agent_verification_model_v2_reviewed.md",
+    "docs/methodology/d_5.agentic_env_setup.md",
+    "docs/02-architecture/08.standards.md",
+    "docs/methodology/agent_request_lifecycle_kms_sdd_grounding.md",
+    "docs/02-architecture/07.project-structure.md",
+    "docs/02-architecture/06.adr.md",
+    "docs/02-architecture/05.nfr.md",
+    "docs/02-architecture/04.architecture-c4.md",
+    "docs/02-architecture/02.glossary.md",
+    "docs/02-architecture/03.vision.md",
+    "docs/_templates/llm-wiki-template.md",
+    "docs/_templates/grounding-template.md",
+    "docs/_obsidian/property-values/category/governance.md",
+    "docs/_obsidian/property-values/category/workspace_assumption.md",
+    "docs/03-business-analysis/1.ba.md",
+    "docs/03-business-analysis/1.template-ui-analytics.md",
+    "docs/03-business-analysis/02.glossary.md",
+    "docs/03-business-analysis/10.avg_mode_business_analysis.md",
+    "docs/03-business-analysis/09.bpmn.md",
+    "docs/03-business-analysis/slide2/slide2_cluster-wide.md",
+    "docs/03-business-analysis/slide2/slide2_avg_cluster_wide.md",
+    "docs/03-business-analysis/slide2/slide2.md",
+    "docs/03-business-analysis/slide1/slide1.md",
+    "docs/_templates/doc-template.md",
+    "docs/_obsidian.zip",
+    "docs/02-architecture/diagrams/C4_Component_Pipeline.png",
+    "docs/01-requirements/00.final-business-requirements.md",
+    "docs/00-governance/obsidian-property-values/type",
+    "docs/00-governance/obsidian-property-values/truth_level",
+    "docs/00-governance/obsidian-property-values/tags",
+    "docs/00-governance/obsidian-property-values/status",
+    "docs/00-governance/obsidian-property-values/source_policy",
+    "docs/00-governance/obsidian-property-values/category",
+    "docs/00-governance/obsidian-property-values",
+    "tools/init-obsidian-taxonomy.ps1"
+  ]
+}

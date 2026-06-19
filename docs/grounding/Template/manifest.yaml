@@ -1,0 +1,23 @@
+version: "0.1.0"
+project: unknown
+status: draft
+updated: "YYYY-MM-DD"
+description: "Machine-readable source registry template. Keep source groups and source IDs populated when adapting this file."
+
+source_groups:
+  example:
+    description: "Replace with a real source group."
+    paths:
+      - docs/example/
+
+sources:
+  - source_id: example-source
+    path: docs/example.md
+    type: technical_note
+    owner: unknown
+    truth_level: draft
+    coverage:
+      - example
+    usage_rule: "Replace this entry with a real project source."
+
+prompts: []

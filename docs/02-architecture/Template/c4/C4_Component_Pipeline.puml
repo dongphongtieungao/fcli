@@ -1,0 +1,10 @@
+@startuml
+title C4 Component Template
+package "Application" {
+  component "Entry Point" as entry
+  component "Service" as service
+  component "Adapter" as adapter
+}
+entry --> service
+service --> adapter
+@enduml

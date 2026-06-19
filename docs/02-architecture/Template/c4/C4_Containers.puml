@@ -1,0 +1,8 @@
+@startuml
+title C4 Containers Template
+rectangle "System Under Design" {
+  rectangle "Application" as app
+  database "Data Store" as db
+}
+app --> db : Reads/Writes
+@enduml

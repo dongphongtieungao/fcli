@@ -1,0 +1,24 @@
+# Mục đích: Ép quy tắc làm việc trong Cursor theo Spec-First & Agentic
+
+responses:
+  must_include_citations: true
+  min_citations: 2
+  structured_answer: true
+  format_guideline: |
+    - Luôn trả lời ngắn gọn, có mục tiêu.
+    - Đính kèm citations theo source_id trong docs/grounding/manifest.yaml.
+    - Nếu thiếu bằng chứng, nêu rõ "không đủ bằng chứng".
+
+prompts:
+  no_hardcode: true
+  location: docs/grounding/prompts/
+
+specs:
+  openapi_path: specs/10.openapi.yaml
+  tool_schemas: specs/schemas/tools/
+
+guardrails:
+  deny_leaking_secrets: true
+  pii_redaction_required: true
+
+

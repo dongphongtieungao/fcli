@@ -1,0 +1,25 @@
+# Starter Repository Rules
+
+domain: new-project-starter
+
+core:
+  - Follow AGENTS.md first.
+  - Keep docs, tests, and implementation aligned.
+  - Do not hardcode secrets, credentials, connection strings, tokens, or PII.
+  - Do not invent domain rules before the new project defines them.
+  - Keep changes scoped and reversible.
+
+documentation:
+  - Use docs/ as the official knowledge base.
+  - Use llm-wiki/ only as workspace memory.
+  - Keep source_of_truth and related links real.
+  - Mark uncertain docs as draft.
+
+implementation:
+  - Prefer explicit boundaries between adapters, domain logic, and outputs.
+  - Add tests when behavior changes.
+  - Keep generated artifacts out of source unless explicitly needed.
+
+verification:
+  - Run the smallest useful check for the change.
+  - Report exact command, outcome, and residual risk.

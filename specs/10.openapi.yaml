@@ -1,0 +1,29 @@
+openapi: 3.1.0
+info:
+  title: New Project API
+  version: 0.1.0
+  description: >
+    Starter OpenAPI contract for the new project. Replace or extend this file
+    only when the project exposes an API surface.
+servers: []
+tags:
+  - name: sdd/generic
+    description: Generic reusable SDD API placeholder.
+paths: {}
+components:
+  schemas: {}
+  responses: {}
+  parameters: {}
+  securitySchemes: {}
+x-governance:
+  category: spec_test
+  status: draft
+  tags:
+    - sdd/openapi
+    - sdd/reusable
+    - sdd/generic
+  source_of_truth:
+    - docs/grounding/manifest.yaml
+    - docs/grounding/sources.md
+    - docs/04-spec-test/12.governance-spectral.md
+  usage_rule: "Do not treat this placeholder as an implemented API."

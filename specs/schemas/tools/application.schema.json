@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/tools/application.schema.json",
+  "title": "Starter Application Tool Schema",
+  "description": "Generic schema for a future application tool invocation.",
+  "x-governance": {
+    "category": "spec_test",
+    "status": "draft",
+    "tags": [
+      "sdd/application-spec",
+      "sdd/reusable",
+      "sdd/generic"
+    ],
+    "usage_rule": "Do not treat this placeholder as an implemented tool contract until a project interface is defined."
+  },
+  "type": "object",
+  "properties": {
+    "config": {
+      "type": "string",
+      "description": "Path to a configuration file."
+    },
+    "debug": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable debug output without exposing sensitive data."
+    },
+    "dry_run": {
+      "type": "boolean",
+      "default": false,
+      "description": "Validate inputs without performing the main action."
+    }
+  },
+  "required": [],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "config": "config.example.yaml",
+      "debug": true,
+      "dry_run": true
+    }
+  ]
+}

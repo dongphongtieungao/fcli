@@ -1,0 +1,36 @@
+openapi: 3.1.0
+info:
+  title: New Project API
+  version: 0.1.0
+  description: >
+    Reusable OpenAPI template. Fill paths, schemas, security, examples, and
+    error responses only after the project API contract is known.
+servers: []
+tags:
+  - name: sdd/generic
+    description: Generic reusable SDD API template.
+  - name: sdd/template
+    description: Template marker; replace with project API tags when concrete operations exist.
+paths: {}
+components:
+  schemas: {}
+  responses: {}
+  parameters: {}
+  securitySchemes: {}
+x-template:
+  category: spec_test
+  status: draft
+  tags:
+    - sdd/openapi
+    - sdd/template
+    - sdd/reusable
+    - sdd/generic
+  source_of_truth:
+    - docs/grounding/manifest.yaml
+    - docs/grounding/sources.md
+    - docs/04-spec-test/12.governance-spectral.md
+  checklist:
+    - Define API ownership and lifecycle status.
+    - Add operation IDs, request/response schemas, and error contracts.
+    - Add examples and validation rules.
+    - Link tests or contract checks before publishing.

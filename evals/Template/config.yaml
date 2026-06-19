@@ -1,0 +1,52 @@
+# Muc dich: Khai bao chi so, nguong va che do chay evals cho CI/Agent
+# Vai tro: Lam guardrails chan PR neu khong dat nguong
+
+metrics:
+  faithfulness:
+    enabled: true
+    threshold: 0.75
+    weight: 0.4
+  answer_relevancy:
+    enabled: true
+    threshold: 0.70
+    weight: 0.3
+  context_precision:
+    enabled: true
+    threshold: 0.60
+    weight: 0.15
+  context_recall:
+    enabled: true
+    threshold: 0.60
+    weight: 0.15
+  latency_ms:
+    enabled: false
+    max: 5000
+  cost_usd:
+    enabled: false
+    max: 0.05
+
+requirements:
+  min_citations: 2  # so luong toi thieu nguon trich dan hop le
+  allow_redundancy_ratio: 0.60  # do lap lai nguon toi da
+
+suites:
+  golden:
+    path: cases/sample_golden.jsonl
+    required: true
+  adversarial:
+    path: cases/sample_adversarial.jsonl
+    required: true
+  regression:
+    path: cases/sample_regression.jsonl
+    required: false
+
+ci:
+  fail_on_below_threshold: true
+  run_on_changes:
+    - docs/grounding/**
+    - evals/**
+    - specs/**
+    - docs/04-spec-test/**
+    - src/**
+
+
