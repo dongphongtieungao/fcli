@@ -4,7 +4,7 @@ category: grounding
 status: published
 owner: unknown
 domain: grounding
-project: ftransform
+project: fcli
 created: 2026-05-13
 updated: 2026-05-14
 sensitivity: internal

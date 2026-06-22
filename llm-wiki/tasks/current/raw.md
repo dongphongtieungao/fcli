@@ -3,7 +3,7 @@ type: technical_note
 status: draft
 owner: unknown
 domain: workspace
-project: ftransform
+project: fcli
 created: 2026-05-13
 updated: 2026-05-13
 sensitivity: internal
@@ -30,7 +30,7 @@ Received on 2026-05-13 in the repository workspace.
 ## Original Text
 
 ```text
-[$create-current-task](C:\\Sk\\Dba\\ftransform\\.agents\\skills\\create-current-task\\SKILL.md) "tôi cần khởi tạo mới 1 project. tôi đã hãy loại bỏ phần lớn code và các tài liệu liên quan đến dữ án cũ. bạn hãy rà soát lại và clean nội dung và tài liệu liên quan đến dự án cũ để tôi có thể sử dụng project hiện tại như là cấu trúc khởi điểm của project mới."
+[$create-current-task](C:\\Sk\\Dba\\fcli\\.agents\\skills\\create-current-task\\SKILL.md) "tôi cần khởi tạo mới 1 project. tôi đã hãy loại bỏ phần lớn code và các tài liệu liên quan đến dữ án cũ. bạn hãy rà soát lại và clean nội dung và tài liệu liên quan đến dự án cũ để tôi có thể sử dụng project hiện tại như là cấu trúc khởi điểm của project mới."
 ```
 
 ## Notes

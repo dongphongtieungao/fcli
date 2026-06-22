@@ -4,7 +4,7 @@ category: operation
 status: published
 owner: unknown
 domain: agentic-sdlc
-project: ftransform
+project: fcli
 created: 2026-05-13
 updated: 2026-05-14
 sensitivity: internal

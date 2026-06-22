@@ -1,7 +1,7 @@
 {
   "permissions": {
     "allow": [
-      "Bash(powershell -Command \"Get-ChildItem -Path 'C:\\\\Sk\\\\Dba\\\\ftransform\\\\reports' -Recurse | Select-Object FullName, Mode, Length | Format-Table -AutoSize -Wrap\")"
+      "Bash(powershell -Command \"Get-ChildItem -Path 'C:\\\\Sk\\\\Dba\\\\fcli\\\\reports' -Recurse | Select-Object FullName, Mode, Length | Format-Table -AutoSize -Wrap\")"
     ]
   }
 }

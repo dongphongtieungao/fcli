@@ -6,7 +6,7 @@ category: methodology
 status: published
 owner: governance
 domain: agentic-sdlc
-project: ftransform
+project: fcli
 workspace: docs
 created: '2026-04-29'
 updated: 2026-05-14
@@ -56,7 +56,7 @@ tags:
 
 ## 1. Mục Đích
 
-Tài liệu này mô tả vòng đời thực tế của một request trong repo `ftransform`; bản này được rà soát cập nhật lần gần nhất vào 2026-05-12.
+Tài liệu này mô tả vòng đời thực tế của một request trong repo `fcli`; bản này được rà soát cập nhật lần gần nhất vào 2026-05-12.
 
 Nó chuẩn hóa cách agent đi từ request của user tới grounding, retrieval, đối chiếu docs/tests/src/workspace, thực thi có kiểm soát, verification, cập nhật `llm-wiki/`, và promote sang `docs/` khi thật sự có thay đổi source of truth.
 

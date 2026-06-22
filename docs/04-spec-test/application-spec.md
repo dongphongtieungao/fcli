@@ -4,7 +4,7 @@ category: spec_test
 status: draft
 owner: unknown
 domain: unknown
-project: ftransform
+project: fcli
 created: 2026-05-14
 updated: 2026-05-14
 sensitivity: internal

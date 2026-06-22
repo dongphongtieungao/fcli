@@ -6,7 +6,7 @@ category: methodology
 status: published
 owner: governance
 domain: agentic-sdlc
-project: ftransform
+project: fcli
 workspace: docs
 created: 2026-05-13
 updated: 2026-05-14

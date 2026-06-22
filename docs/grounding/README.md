@@ -6,7 +6,7 @@ category: grounding
 status: published
 owner: grounding
 domain: grounding
-project: ftransform
+project: fcli
 workspace: docs
 created: '2026-04-27'
 updated: 2026-05-14

@@ -3,7 +3,7 @@ type: guide
 status: draft
 owner: unknown
 domain: starter
-project: ftransform
+project: fcli
 created: 2026-04-27
 updated: 2026-05-13
 sensitivity: internal

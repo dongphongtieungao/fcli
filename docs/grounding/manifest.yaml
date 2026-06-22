@@ -1,5 +1,5 @@
 version: "0.2.3"
-project: ftransform
+project: fcli
 status: published
 updated: "2026-06-22"
 description: "Starter repository grounding registry. This file is intentionally domain-neutral but must remain populated so agents can route work to reusable source-of-truth layers."

@@ -109,7 +109,7 @@ Mã thoát (Exit code): `0` = PASS (Đạt), `1` = FAIL (Lỗi).
 
 ## 3. `init-project.ps1` — Project Initializer
 
-Khởi tạo repository starter SDD cho một dự án mới bằng cách thay thế placeholder `ftransform` thành tên dự án của bạn.
+Khởi tạo repository starter SDD cho một dự án mới bằng cách thay thế placeholder `fcli` thành tên dự án của bạn.
 
 ### Cách sử dụng
 
@@ -125,7 +125,7 @@ Khởi tạo repository starter SDD cho một dự án mới bằng cách thay t
 
 1. Quét tất cả các file `.md`, `.yaml`, `.yml` trong `docs/`, `llm-wiki/`, `specs/`
 2. Quét các file quản trị gốc: `AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `README.md`, `.cursorrules`
-3. Thay thế mọi từ `ftransform` → `<TênDựÁn>`
+3. Thay thế mọi từ `fcli` → `<TênDựÁn>`
 4. Đặt lại nội dung các file trong `llm-wiki/tasks/current/*.md` về các template rỗng
 
 ### Các bước sau khi khởi tạo

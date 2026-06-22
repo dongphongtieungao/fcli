@@ -3,7 +3,7 @@
   Initialize the SDD starter repository for a new project.
 
 .DESCRIPTION
-  Replaces the starter placeholder 'ftransform' with the given project name
+  Replaces the starter placeholder 'fcli' with the given project name
   across all Markdown and YAML files in docs/, llm-wiki/, and root governance files.
   Also cleans llm-wiki/tasks/current/ to empty templates.
 
@@ -26,7 +26,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$OldName = 'ftransform'
+$OldName = 'fcli'
 
 # Directories to scan
 $ScanPaths = @(

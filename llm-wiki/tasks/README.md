@@ -6,7 +6,7 @@ category: workspace_index
 status: observed
 owner: agent
 domain: agentic-sdlc
-project: ftransform
+project: fcli
 workspace: llm-wiki
 created: 2026-05-13
 updated: 2026-05-13
