@@ -6,7 +6,7 @@ owner: unknown
 domain: grounding
 project: ftransform
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-22
 sensitivity: internal
 source_of_truth:
   - AGENTS.md
@@ -43,16 +43,20 @@ The catalog is domain-neutral, not empty. It should preserve reusable source IDs
 | `data-governance-baseline` | `docs/00-governance/00.data-governance.md` | governance | unknown | Data classification, retention, quality, access, auditability | official | Use when data sources or data controls are introduced |
 | `governance-rules-baseline` | `docs/00-governance/00.governance-rules.md` | governance | unknown | Reusable repository governance | official | Use when changing source-of-truth or repository controls |
 | `patterns-anti-patterns-baseline` | `docs/00-governance/00.patterns-anti-patterns.md` | governance | unknown | Reusable practices and cleanup anti-patterns | official | Use when reviewing methodology or cleanup behavior |
-| `requirements-index` | `docs/01-requirements/00.requirement.md` | requirement | unknown | Requirement index and scope | official | Use for requirement promotion targets |
+| `requirements-index` | `docs/01-requirements/00.requirement.md` | requirement | unknown | Published PrivateGPT Adapter requirement (compatibility alias) | official | Use as the primary requirement index for PrivateGPT Adapter work |
+| `privategpt-adapter-requirement` | `docs/01-requirements/00.requirement.md` | requirement | unknown | Canonical PrivateGPT Adapter MVP requirement | official | Use as the authoritative requirement for PrivateGPT Adapter implementation |
+| `provider-spi-spec` | `docs/01-requirements/00.requirement_Provider_SPI_Specification.md` | contract_spec | unknown | Published Provider SPI appendix | official | Use when implementing Provider SPI adapters or validating provider boundaries |
+| `privategpt-adapter-arch-v2` | `docs/01-requirements/00.requirement_PrivateGPT_Adapter_Architecture_v2.md` | architecture | unknown | Published PrivateGPT Adapter architecture appendix | official | Use when planning or validating the adapter architecture and sync rules |
 | `business-requirements` | `docs/01-requirements/00.final-business-requirements.md` | requirement | unknown | Approved business requirements | official | Use when a requirement becomes business-facing scope |
 | `use-cases` | `docs/01-requirements/01.use-cases.md` | use_case | unknown | Use cases and acceptance drafts | official | Use when mapping actors, flows, and acceptance criteria |
-| `architecture-glossary` | `docs/02-architecture/02.glossary.md` | glossary | unknown | Core terminology and bounded context | official | Use when terminology changes |
+| `architecture-glossary` | `docs/02-architecture/02.glossary.md` | glossary | unknown | Published PrivateGPT Adapter technical terminology and boundaries | official | Use when terminology, integration boundaries, or technical contracts change |
 | `architecture-vision` | `docs/02-architecture/03.vision.md` | vision | unknown | Goals, non-goals, scope | official | Use when project direction needs grounding |
 | `architecture-c4` | `docs/02-architecture/04.architecture-c4.md` | architecture_c4 | unknown | Architecture boundaries and components | official | Use for C4 or boundary changes |
 | `architecture-nfr` | `docs/02-architecture/05.nfr.md` | nfr | unknown | Non-functional requirements | official | Use for security, performance, reliability, or operability constraints |
 | `architecture-adr` | `docs/02-architecture/06.adr.md` | adr | unknown | Decisions and trade-offs | official | Use for architecture decisions |
 | `architecture-standards` | `docs/02-architecture/08.standards.md` | standards | unknown | Standards and coding guidance | official | Use when standards change |
-| `business-glossary` | `docs/03-business-analysis/02.glossary.md` | glossary | unknown | Business terms | official | Use when business terminology changes |
+| `business-glossary` | `docs/03-business-analysis/02.glossary.md` | glossary | unknown | Published PrivateGPT Adapter actor and acceptance terminology | official | Use when business terminology, pilot scope, or acceptance wording changes |
+| `privategpt-adapter-business-glossary` | `docs/03-business-analysis/02.glossary.md` | glossary | unknown | PrivateGPT Adapter business glossary alias | official | Use when mapping the canonical requirement to actors, pilot behavior, or acceptance criteria |
 | `business-bpmn` | `docs/03-business-analysis/09.bpmn.md` | bpmn | unknown | Business flows and workflow | official | Use when behavior or workflow changes |
 | `spec-jsonschema-governance` | `docs/04-spec-test/11.governance-jsonschema-rules.md` | contract_spec | unknown | JSON Schema governance | official | Use when schema validation rules are introduced |
 | `spec-spectral-governance` | `docs/04-spec-test/12.governance-spectral.md` | contract_spec | unknown | OpenAPI/API lint governance | official | Use when API lint rules are introduced |
@@ -82,6 +86,8 @@ The catalog is domain-neutral, not empty. It should preserve reusable source IDs
 | `antigravity-agent-bridge` | `GEMINI.md` | agent_policy | unknown | Antigravity/Gemini-facing bridge | official | Read after `AGENTS.md` when Antigravity is the active agent |
 | `antigravity-playbook` | `docs/antigravity/playbook.md` | runbook | unknown | Antigravity adapter workflow | official | Use when running Antigravity against the reusable SDD/KMS workflow |
 | `antigravity-sdd-rule` | `.agent/rules/sdd-antigravity.md` | agent_policy | unknown | Antigravity grounding, verification, and sync rule | official | Use as the Antigravity operating rule |
+| `plugin-code` | `docs/01-requirements/plugin-code` | reference_code | unknown | Java plugin reference implementation (evidence) | draft | Use when mapping internal API behavior from plugin |
+| `opencode-cli-doc` | `docs/01-requirements/opencode-cli-doc` | guide | unknown | OpenCode CLI usage and integration guide | draft | Use when integrating adapter with OpenCode CLI |
 | `shared-skill-sdd-request-intake` | `.agents/skills/sdd-request-intake/SKILL.md` | guide | unknown | SDD request intake adapter (shared) | official | Adapter for `docs/grounding/skills/1.sdd-request-intake.md` |
 | `shared-skill-kms-retrieval-context-pack` | `.agents/skills/kms-retrieval-context-pack/SKILL.md` | guide | unknown | KMS context retrieval adapter (shared) | official | Adapter for `docs/grounding/skills/2.kms-retrieval-context-pack.md` |
 | `shared-skill-prompt-lane-router` | `.agents/skills/prompt-lane-router/SKILL.md` | guide | unknown | Prompt lane router adapter (shared) | official | Adapter for `docs/grounding/skills/3.prompt-lane-router.md` |

@@ -6,13 +6,18 @@ owner: unknown
 domain: grounding
 project: ftransform
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-22
 sensitivity: internal
 source_of_truth:
   - AGENTS.md
   - docs/AGENTS.md
   - docs/grounding/manifest.yaml
   - docs/grounding/sources.md
+  - docs/01-requirements/00.requirement.md
+  - docs/01-requirements/00.requirement_Provider_SPI_Specification.md
+  - docs/01-requirements/00.requirement_PrivateGPT_Adapter_Architecture_v2.md
+  - docs/01-requirements/plugin-code
+  - docs/01-requirements/opencode-cli-doc
 related:
   - sources.md
   - prompts.md
@@ -89,6 +94,13 @@ Use [manifest.yaml](./manifest.yaml) as the machine-readable registry and [sourc
 | `qa-matrix` | `docs/06-quality-assurance/14.qa-matrix.md` | Verification expectations |
 | `starter-application-spec` | `docs/04-spec-test/application-spec.md` | Starter application interface placeholder |
 | `starter-application-schema` | `specs/schemas/tools/application.schema.json` | Starter application/tool schema placeholder |
+| `architecture-glossary` | `docs/02-architecture/02.glossary.md` | Published PrivateGPT Adapter technical glossary |
+| `privategpt-adapter-business-glossary` | `docs/03-business-analysis/02.glossary.md` | Published PrivateGPT Adapter business glossary |
+| `privategpt-adapter-requirement` | `docs/01-requirements/00.requirement.md` | Published canonical PrivateGPT Adapter requirement |
+| `provider-spi-spec` | `docs/01-requirements/00.requirement_Provider_SPI_Specification.md` | Published Provider SPI appendix |
+| `privategpt-adapter-arch-v2` | `docs/01-requirements/00.requirement_PrivateGPT_Adapter_Architecture_v2.md` | Published architecture appendix |
+| `plugin-code` | `docs/01-requirements/plugin-code` | Java plugin reference code |
+| `opencode-cli-doc` | `docs/01-requirements/opencode-cli-doc` | OpenCode CLI user guide |
 
 ## Usage By Task Type
 

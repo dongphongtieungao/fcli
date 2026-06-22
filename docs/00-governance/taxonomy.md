@@ -9,7 +9,7 @@ domain: agentic-sdlc
 project: current
 workspace: docs
 created: '2026-04-28'
-updated: 2026-05-14
+updated: 2026-06-22
 sensitivity: internal
 truth_level: official
 source_policy: source_of_truth
@@ -19,6 +19,7 @@ source_of_truth:
   - docs/methodology/o_3.kms_obsidian_rg_runbook.md
   - docs/00-governance/metadata-schema.md
   - docs/00-governance/taxonomy.md
+  - docs/01-requirements/00.requirement.md
 related:
   - docs/00-governance/metadata-schema.md
   - docs/grounding/manifest.md
@@ -136,7 +137,6 @@ Use this file to choose metadata for reusable software-delivery artifacts. Proje
 - `reviewed`
 - `published`
 - `deprecated`
-- `archived`
 
 ## Status Guidance
 
@@ -171,6 +171,12 @@ Use `draft` for templates, placeholders, product contracts that still need proje
 - `workspace_only`
 - `reference_only`
 
+## Controlled Domain Values
+
+Use `privategpt-adapter` for artifacts that define, implement, verify, or operate the PrivateGPT Adapter MVP. This value is valid only because the canonical requirement has been published.
+
+Existing generic values, including `agentic-sdlc`, `quality`, `delivery`, and `unknown`, remain valid where they accurately describe the artifact.
+
 ## Tag Namespaces
 
 - `kms/*`
@@ -191,6 +197,24 @@ Use `draft` for templates, placeholders, product contracts that still need proje
 - `kms/governance`
 - `kms/grounding`
 
+## PrivateGPT Adapter Tag Extension
+
+Use the following controlled tags for the published PrivateGPT Adapter knowledge set. Apply only tags that describe the artifact; do not add a tag merely because a term appears in the text.
+
+- `domain/privategpt-adapter`
+- `integration/opencode`
+- `integration/privategpt`
+- `architecture/provider-spi`
+- `contract/openai-compatible`
+- `runtime/agent-mode`
+- `protocol/sse`
+- `security/browser-session`
+- `model/gemini-2.5-pro`
+
+## Publication Rule For Project-Specific Documents
+
+A project-specific Markdown document may use `status: published` only when it has a canonical source, a defined scope, a traceable related artifact, and no unresolved contradiction that changes its stated behavior. Use `truth_level: official` and `source_policy: source_of_truth` for a primary requirement or approved appendix; use `reference_only` for observed code or exported vendor documentation.
+
 ## Related
 
 - [metadata-schema.md](./metadata-schema.md)
@@ -202,3 +226,4 @@ Use `draft` for templates, placeholders, product contracts that still need proje
 
 - 2026-04-28: Aligned controlled values with `o_2.kms_intergrate.md` and Obsidian property seed generation.
 - 2026-05-14: Reframed taxonomy for reusable generic SDD software projects, added `contract_spec`, and documented reusable starter tags.
+- 2026-06-22: Added controlled domain and tag values for the published PrivateGPT Adapter knowledge set.

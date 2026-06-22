@@ -1,0 +1,51 @@
+<idea-plugin>
+  <version>2.0.0</version>
+  <idea-version since-build="231" />
+  <!-- ==================== Plugin Identity ==================== -->
+  <id>com.tubitech.tubi-copilot</id>
+  <name>Tubi Copilot</name>
+  <vendor email="support@tubitech.com" url="https://tubitech.com">TubiTech</vendor>
+  <description><![CDATA[<p><b>Tubi Copilot</b> — AI-powered coding assistant for IntelliJ IDEA.</p>
+        <p>Chat with an AI backed by FPT Consulting's private azure-gpt-5.2 API.
+        Send code context, receive streaming responses, and insert generated code
+        directly into your editor.</p>]]></description>
+  <change-notes><![CDATA[<ul>
+            <li><b>0.1.0</b> — Initial release: basic chat, context injection, settings</li>
+        </ul>]]></change-notes>
+  <!-- ==================== Dependencies ==================== -->
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.java</depends>
+  <!-- ==================== Extensions ==================== -->
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Tool Window: Tubi Copilot chat panel in the right stripe -->
+    <toolWindow id="Tubi Copilot" anchor="right" secondary="false" factoryClass="com.tubitech.copilot.ui.TubiCopilotToolWindowFactory" icon="/icons/tubi-copilot.svg" />
+    <!-- Settings page: Settings → Tools → Tubi Copilot -->
+    <applicationConfigurable parentId="tools" id="com.tubitech.copilot.settings.TubiCopilotSettingsConfigurable" displayName="Tubi Copilot" instance="com.tubitech.copilot.settings.TubiCopilotSettingsConfigurable" />
+    <!-- Application-level service: plugin settings (non-sensitive) -->
+    <applicationService serviceInterface="com.tubitech.copilot.settings.TubiCopilotSettings" serviceImplementation="com.tubitech.copilot.settings.TubiCopilotSettings" />
+    <!-- Application-level service: conversation history persistence (legacy XML, kept for migration) -->
+    <applicationService serviceInterface="com.tubitech.copilot.history.ConversationHistory" serviceImplementation="com.tubitech.copilot.history.ConversationHistory" />
+    <!-- Project-level service: SQLite-backed conversation history -->
+    <projectService serviceInterface="com.tubitech.copilot.history.ProjectHistoryService" serviceImplementation="com.tubitech.copilot.history.ProjectHistoryService" />
+    <!-- Eager initialization of SQLite history on project open -->
+    <postStartupActivity implementation="com.tubitech.copilot.history.HistoryInitActivity" />
+    <!-- Application-level service: OAuth2 token manager (refresh token → access token) -->
+    <applicationService serviceInterface="com.tubitech.copilot.auth.TokenManager" serviceImplementation="com.tubitech.copilot.auth.TokenManagerImpl" />
+  </extensions>
+  <!-- ==================== Actions ==================== -->
+  <actions>
+    <!-- Editor right-click → "Send to Tubi Copilot" -->
+    <action id="TubiCopilot.SendSelection" class="com.tubitech.copilot.actions.SendSelectionAction" text="Send to Tubi Copilot" description="Send the selected code (or active file) to Tubi Copilot chat as context">
+      <add-to-group group-id="EditorPopupMenu" anchor="last" />
+      <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift T" />
+    </action>
+    <!-- New conversation (used from toolbar button wired in ChatPanel) -->
+    <action id="TubiCopilot.NewConversation" class="com.tubitech.copilot.actions.NewConversationAction" text="New Tubi Copilot Conversation" description="Start a fresh conversation session in Tubi Copilot" />
+    <!-- Clear all history -->
+    <action id="TubiCopilot.ClearHistory" class="com.tubitech.copilot.actions.ClearHistoryAction" text="Clear Tubi Copilot History" description="Delete all saved Tubi Copilot conversation sessions" />
+    <!-- Project-view right-click → "Scan Folder with Tubi Copilot" -->
+    <action id="TubiCopilot.ScanFolder" class="com.tubitech.copilot.actions.ScanFolderAction" text="Scan Folder with Tubi Copilot" description="Scan all text/code files in the selected folder and send as context to Tubi Copilot">
+      <add-to-group group-id="ProjectViewPopupMenu" anchor="last" />
+    </action>
+  </actions>
+</idea-plugin>
