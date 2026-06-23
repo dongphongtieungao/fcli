@@ -1,7 +1,7 @@
 version: "0.2.3"
 project: fcli
 status: published
-updated: "2026-06-22"
+updated: "2026-06-23"
 description: "Starter repository grounding registry. This file is intentionally domain-neutral but must remain populated so agents can route work to reusable source-of-truth layers."
 
 source_groups:
@@ -33,6 +33,11 @@ source_groups:
     paths:
       - docs/04-spec-test/
       - specs/
+  executable_acceptance:
+    description: "Gherkin acceptance specifications and BPMN-to-BDD traceability evidence."
+    paths:
+      - tests/features/
+      - tests/bdd/
   environment:
     description: "Environment and setup guidance."
     paths:
@@ -163,7 +168,7 @@ sources:
     coverage:
       - privategpt-adapter
       - primary-requirement
-    usage_rule: "Compatibility alias for the published PrivateGPT Adapter primary requirement."
+    usage_rule: "Compatibility alias for the published OpenCode PrivateGPT Bridge primary requirement."
 
   - source_id: privategpt-adapter-requirement
     path: docs/01-requirements/00.requirement.md
@@ -175,7 +180,19 @@ sources:
       - privategpt-adapter
       - mvp-requirements
       - opencode-integration
-    usage_rule: "Use as the authoritative PrivateGPT Adapter MVP requirement."
+    usage_rule: "Use as the authoritative OpenCode PrivateGPT Bridge MVP requirement."
+
+  - source_id: privategpt-adapter-architecture-design
+    path: docs/01-requirements/00.achieteture_idea_v3.md
+    type: architecture
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - privategpt-adapter
+      - architecture-design
+      - local-python-bridge
+    usage_rule: "Use as the published architecture-design appendix under the canonical OpenCode PrivateGPT Bridge requirement."
 
   - source_id: provider-spi-spec
     path: docs/01-requirements/00.requirement_Provider_SPI_Specification.md
@@ -199,7 +216,7 @@ sources:
       - privategpt-adapter
       - target-architecture
       - provider-layer
-    usage_rule: "Use as the published architecture appendix for the PrivateGPT Adapter MVP."
+    usage_rule: "Use as the published architecture appendix for the OpenCode PrivateGPT Bridge MVP."
 
   - source_id: plugin-code
     path: docs/01-requirements/plugin-code
@@ -232,8 +249,11 @@ sources:
     truth_level: official
     status: published
     coverage:
+      - privategpt-adapter
       - business-requirements
-    usage_rule: "Use when a requirement has been approved as business-facing scope."
+      - acceptance-criteria
+      - pilot-scope
+    usage_rule: "Use as the published business-facing scope and acceptance source for OpenCode PrivateGPT Bridge work."
 
   - source_id: use-cases
     path: docs/01-requirements/01.use-cases.md
@@ -256,7 +276,7 @@ sources:
       - privategpt-adapter
       - technical-terminology
       - integration-boundaries
-    usage_rule: "Use when a task introduces or changes PrivateGPT Adapter terminology, boundaries, or technical contracts."
+    usage_rule: "Use when a task introduces or changes OpenCode PrivateGPT Bridge terminology, boundaries, or technical contracts."
 
   - source_id: architecture-vision
     path: docs/02-architecture/03.vision.md
@@ -279,7 +299,10 @@ sources:
     coverage:
       - c4
       - component-boundaries
-    usage_rule: "Use when architecture boundaries, containers, or components are affected."
+      - local-python-bridge
+      - agent-binding
+      - streaming-boundaries
+    usage_rule: "Use when architecture actors, containers, components, dependency direction, Agent binding, or streaming flow are affected."
 
   - source_id: architecture-nfr
     path: docs/02-architecture/05.nfr.md
@@ -289,7 +312,11 @@ sources:
     status: published
     coverage:
       - non-functional-requirements
-    usage_rule: "Use when performance, security, reliability, scalability, or operability constraints are affected."
+      - security
+      - reliability
+      - streaming
+      - operability
+    usage_rule: "Use when security, reliability, streaming, performance, operability, or maintainability constraints are affected."
 
   - source_id: architecture-adr
     path: docs/02-architecture/06.adr.md
@@ -300,7 +327,8 @@ sources:
     coverage:
       - decisions
       - tradeoffs
-    usage_rule: "Use when architectural decisions or alternatives need to be recorded."
+      - mvp-architecture
+    usage_rule: "Use when a boundary, deployment, provider, Agent, resilience, or credential decision changes."
 
   - source_id: architecture-standards
     path: docs/02-architecture/08.standards.md
@@ -311,7 +339,10 @@ sources:
     coverage:
       - standards
       - coding-guidance
-    usage_rule: "Use when coding, review, architecture, or documentation standards are affected."
+      - python
+      - security
+      - contract-verification
+    usage_rule: "Use when Python coding, security, contract, review, architecture, or documentation standards are affected."
 
   - source_id: business-glossary
     path: docs/03-business-analysis/02.glossary.md
@@ -323,7 +354,7 @@ sources:
       - privategpt-adapter
       - actors
       - acceptance-terminology
-    usage_rule: "Use when PrivateGPT Adapter actor, pilot, or acceptance terminology changes."
+    usage_rule: "Use when OpenCode PrivateGPT Bridge actor, pilot, or acceptance terminology changes."
 
   - source_id: privategpt-adapter-business-glossary
     path: docs/03-business-analysis/02.glossary.md
@@ -347,7 +378,24 @@ sources:
     coverage:
       - business-flow
       - workflow
-    usage_rule: "Use when behavior, workflow, happy path, or error path changes."
+      - bridge-startup
+      - login
+      - agent-sync
+      - chat-completion
+    usage_rule: "Use when Bridge startup, login, Agent synchronization, chat completion, BPMN gateways, or process exceptions are affected."
+
+  - source_id: privategpt-adapter-bdd-acceptance
+    path: tests/features/*.feature, tests/bdd/
+    type: executable_spec
+    owner: unknown
+    truth_level: official
+    status: published
+    coverage:
+      - gherkin
+      - acceptance-criteria
+      - bpmn-traceability
+      - bridge-mvp
+    usage_rule: "Use when deriving, implementing, reviewing, or verifying acceptance behavior; the canonical requirement and BPMN remain the source for business scope."
 
   - source_id: spec-jsonschema-governance
     path: docs/04-spec-test/11.governance-jsonschema-rules.md
@@ -380,7 +428,10 @@ sources:
     coverage:
       - prompt-guardrails
       - agent-quality
-    usage_rule: "Use when prompt behavior, agent controls, or generated-output quality is affected."
+      - scope-control
+      - tool-file-boundary
+      - evidence-claims
+    usage_rule: "Read before AI planning, implementation, or review that can affect Bridge behavior or contracts."
 
   - source_id: qa-matrix
     path: docs/06-quality-assurance/14.qa-matrix.md
@@ -392,7 +443,10 @@ sources:
       - qa
       - verification
       - evidence
-    usage_rule: "Use when choosing verification checks or reporting validation status."
+      - functional-tests
+      - non-functional-tests
+      - acceptance-traceability
+    usage_rule: "Use to select affected QA rows, fixtures, test level, and evidence before implementation or verification."
 
   - source_id: quality-matrix
     path: docs/07-ci-cd-review/15.quality-matrix.md
@@ -404,7 +458,10 @@ sources:
       - quality
       - ci
       - gates
-    usage_rule: "Use when quality gates or CI expectations change."
+      - pull-request
+      - blocking-rules
+      - change-risk
+    usage_rule: "Use to decide which automated or manual gates must pass before merge or handover."
 
   - source_id: review-checklists
     path: docs/07-ci-cd-review/16.review-checklists.md
@@ -415,7 +472,11 @@ sources:
     coverage:
       - review
       - checklist
-    usage_rule: "Use when review expectations or release review criteria change."
+      - pull-request
+      - contract-review
+      - security-review
+      - streaming-review
+    usage_rule: "Use for Bridge PR, contract, security, streaming, file-context, and release review."
 
   - source_id: definition-of-ready
     path: docs/09-runbook/17.dor.md
@@ -426,7 +487,10 @@ sources:
     coverage:
       - readiness
       - planning-gate
-    usage_rule: "Use before starting implementation or release work."
+      - task-packet
+      - agent-handoff
+      - gap-classification
+    usage_rule: "Use before implementation to resolve scope, sources, scenarios, PG/QA/QG IDs, gaps, and expected evidence."
 
   - source_id: definition-of-done
     path: docs/09-runbook/18.dod.md
@@ -438,7 +502,11 @@ sources:
       - done
       - evidence
       - completion-gate
-    usage_rule: "Use before claiming completion."
+      - handover-packet
+      - review-verdict
+      - kms-sync
+      - rollback
+    usage_rule: "Use before merge, release, or handover to assign a scope-qualified verdict and assemble the reusable handover packet."
 
   - source_id: release-case-study
     path: docs/10-release/sdd-case-study-report.md
@@ -798,16 +866,19 @@ sources:
       - skill-coordination
     usage_rule: "Use before non-trivial implementation to build a structured plan by orchestrating SDD skills."
 
-  - source_id: starter-openapi
+  - source_id: privategpt-adapter-openapi
     path: specs/10.openapi.yaml
     type: openapi
     owner: unknown
     truth_level: draft
     status: draft
     coverage:
-      - openapi
-      - api-contract-placeholder
-    usage_rule: "Use as a starter API contract placeholder only after project APIs are defined."
+      - opencode-integration
+      - local-bridge-api
+      - openai-compatible
+      - chat-completions
+      - streaming
+    usage_rule: "Use for local Bridge implementation and contract tests; do not claim complete wire compatibility until the documented runtime-validation gaps are resolved."
 
   - source_id: starter-application-spec
     path: docs/04-spec-test/application-spec.md
@@ -816,10 +887,26 @@ sources:
     truth_level: draft
     status: draft
     coverage:
+      - compatibility-alias
+      - privategpt-adapter
+    usage_rule: "Compatibility alias for privategpt-adapter-application-spec; retained for generic prompt references."
+
+  - source_id: privategpt-adapter-application-spec
+    path: docs/04-spec-test/application-spec.md
+    type: application_spec
+    owner: unknown
+    truth_level: draft
+    status: draft
+    coverage:
       - application-interface
-      - contract-placeholder
-      - reusable-software-development
-    usage_rule: "Use as the active starter application interface placeholder; promote concrete operations only after requirements or architecture define them."
+      - cli-lifecycle
+      - local-http-api
+      - authentication
+      - agent-sync
+      - chat-streaming
+      - file-context
+      - observability
+    usage_rule: "Use when implementing or verifying Bridge lifecycle, configuration, auth, Agent sync, chat/SSE, error, file-context, and observability behavior."
 
   - source_id: starter-application-schema
     path: specs/schemas/tools/application.schema.json

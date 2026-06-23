@@ -173,7 +173,7 @@ Use `draft` for templates, placeholders, product contracts that still need proje
 
 ## Controlled Domain Values
 
-Use `privategpt-adapter` for artifacts that define, implement, verify, or operate the PrivateGPT Adapter MVP. This value is valid only because the canonical requirement has been published.
+Use `privategpt-adapter` for artifacts that define, implement, verify, or operate the OpenCode PrivateGPT Bridge MVP. This value is valid only because the canonical requirement has been published.
 
 Existing generic values, including `agentic-sdlc`, `quality`, `delivery`, and `unknown`, remain valid where they accurately describe the artifact.
 
@@ -197,9 +197,9 @@ Existing generic values, including `agentic-sdlc`, `quality`, `delivery`, and `u
 - `kms/governance`
 - `kms/grounding`
 
-## PrivateGPT Adapter Tag Extension
+## OpenCode PrivateGPT Bridge Tag Extension
 
-Use the following controlled tags for the published PrivateGPT Adapter knowledge set. Apply only tags that describe the artifact; do not add a tag merely because a term appears in the text.
+Use the following controlled tags for the published OpenCode PrivateGPT Bridge knowledge set. Apply only tags that describe the artifact; do not add a tag merely because a term appears in the text.
 
 - `domain/privategpt-adapter`
 - `integration/opencode`
@@ -226,4 +226,4 @@ A project-specific Markdown document may use `status: published` only when it ha
 
 - 2026-04-28: Aligned controlled values with `o_2.kms_intergrate.md` and Obsidian property seed generation.
 - 2026-05-14: Reframed taxonomy for reusable generic SDD software projects, added `contract_spec`, and documented reusable starter tags.
-- 2026-06-22: Added controlled domain and tag values for the published PrivateGPT Adapter knowledge set.
+- 2026-06-22: Added controlled domain and tag values for the published OpenCode PrivateGPT Bridge knowledge set.

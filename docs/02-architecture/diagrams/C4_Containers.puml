@@ -1,0 +1,25 @@
+@startuml
+title C2 — Containers and Deployment
+left to right direction
+
+rectangle "OpenCode CLI" as opencode
+rectangle "PrivateGPT Platform\nExternal system" as privategpt
+database "Secure Token Store" as tokenstore
+
+package "Developer workstation — one Python process" {
+  component "Console Runtime\nCLI, config, doctor" as cli
+  component "Embedded Web Server\nFastAPI/ASGI" as api
+  component "Gateway and Streaming Proxy\nvalidate, route, relay" as gateway
+  component "Adapter Modules\nAgent, Provider SPI, mapping, SSE parser" as modules
+  database "Workspace Agent Cache\nagent_id, model_id, instructions_hash" as cache
+
+  cli --> api : lifecycle and diagnostics
+  api --> gateway : local function call
+  gateway --> modules : local function call
+  modules <--> cache : Agent metadata
+}
+
+opencode --> api : HTTP /v1
+modules <--> tokenstore : secure token access
+modules --> privategpt : HTTPS Bearer requests
+@enduml

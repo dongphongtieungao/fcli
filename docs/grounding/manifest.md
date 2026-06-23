@@ -6,7 +6,7 @@ owner: unknown
 domain: grounding
 project: fcli
 created: 2026-05-13
-updated: 2026-06-22
+updated: 2026-06-23
 sensitivity: internal
 source_of_truth:
   - AGENTS.md
@@ -66,6 +66,7 @@ Use [manifest.yaml](./manifest.yaml) as the machine-readable registry and [sourc
 | Architecture | `docs/02-architecture/` | Holds glossary, vision, C4, NFR, ADR, standards, and structure |
 | Business analysis | `docs/03-business-analysis/` | Holds business glossary, BPMN, BA notes, and workflow analysis |
 | Specs and contracts | `docs/04-spec-test/`, `specs/` | Holds OpenAPI, application, schema, and lint governance |
+| Executable acceptance | `tests/features/*.feature`, `tests/bdd/` | Holds Gherkin acceptance scenarios and BPMN-to-BDD traceability evidence |
 | Environment | `docs/05-environment-setup/` | Holds setup guidance and environment templates |
 | Quality | `docs/06-quality-assurance/`, `docs/07-ci-cd-review/` | Holds QA matrix, prompt guardrails, review checklist, and quality matrix |
 | Runbook | `docs/09-runbook/` | Holds DoR, DoD, operating, install, rollback, and handover guidance |
@@ -89,14 +90,27 @@ Use [manifest.yaml](./manifest.yaml) as the machine-readable registry and [sourc
 | `grounding-sources-catalog` | `docs/grounding/sources.md` | Citation catalog |
 | `prompt-governance-routing` | `docs/grounding/prompts.md` | Prompt lane routing |
 | `task-workspace-methodology` | `docs/methodology/Task.md` | Task workspace lifecycle |
-| `definition-of-ready` | `docs/09-runbook/17.dor.md` | Ready gate |
-| `definition-of-done` | `docs/09-runbook/18.dod.md` | Done evidence gate |
-| `qa-matrix` | `docs/06-quality-assurance/14.qa-matrix.md` | Verification expectations |
-| `starter-application-spec` | `docs/04-spec-test/application-spec.md` | Starter application interface placeholder |
+| `definition-of-ready` | `docs/09-runbook/17.dor.md` | Published task-packet and readiness gate for planner/coder/tester/verifier agents |
+| `definition-of-done` | `docs/09-runbook/18.dod.md` | Published evidence and handover completion gate |
+| `prompt-guardrails` | `docs/06-quality-assurance/13.prompt-guardrails.md` | Published AI scope, safety and evidence guardrails for the Bridge |
+| `qa-matrix` | `docs/06-quality-assurance/14.qa-matrix.md` | Published functional/NFR verification and evidence mapping |
+| `quality-matrix` | `docs/07-ci-cd-review/15.quality-matrix.md` | Published CI/PR quality gates and blocking rules |
+| `review-checklists` | `docs/07-ci-cd-review/16.review-checklists.md` | Published PR/design review checklist linked to QA gates |
+| `privategpt-adapter-openapi` | `specs/10.openapi.yaml` | Draft OpenAI-compatible local Bridge API contract for OpenCode integration |
+| `privategpt-adapter-application-spec` | `docs/04-spec-test/application-spec.md` | Draft application contract for Bridge CLI, local API and runtime flows |
 | `starter-application-schema` | `specs/schemas/tools/application.schema.json` | Starter application/tool schema placeholder |
-| `architecture-glossary` | `docs/02-architecture/02.glossary.md` | Published PrivateGPT Adapter technical glossary |
-| `privategpt-adapter-business-glossary` | `docs/03-business-analysis/02.glossary.md` | Published PrivateGPT Adapter business glossary |
-| `privategpt-adapter-requirement` | `docs/01-requirements/00.requirement.md` | Published canonical PrivateGPT Adapter requirement |
+| `architecture-glossary` | `docs/02-architecture/02.glossary.md` | Published OpenCode PrivateGPT Bridge technical glossary |
+| `architecture-vision` | `docs/02-architecture/03.vision.md` | Published product vision and requirement-bundle hierarchy |
+| `architecture-c4` | `docs/02-architecture/04.architecture-c4.md` | Published C4 context, containers, components and dependency boundaries |
+| `architecture-nfr` | `docs/02-architecture/05.nfr.md` | Published MVP quality constraints and verification expectations |
+| `architecture-adr` | `docs/02-architecture/06.adr.md` | Published architecture decision register for the MVP |
+| `architecture-standards` | `docs/02-architecture/08.standards.md` | Published Python, security, contract and verification standards |
+| `privategpt-adapter-business-glossary` | `docs/03-business-analysis/02.glossary.md` | Published OpenCode PrivateGPT Bridge business glossary |
+| `business-bpmn` | `docs/03-business-analysis/09.bpmn.md` | Published BPMN for Bridge startup, login, Agent sync and chat completion |
+| `privategpt-adapter-bdd-acceptance` | `tests/features/*.feature`, `tests/bdd/` | Gherkin acceptance specifications and BPMN-to-BDD traceability for the Bridge MVP |
+| `privategpt-adapter-requirement` | `docs/01-requirements/00.requirement.md` | Published canonical OpenCode PrivateGPT Bridge requirement |
+| `business-requirements` | `docs/01-requirements/00.final-business-requirements.md` | Published business-requirements appendix for the canonical requirement |
+| `privategpt-adapter-architecture-design` | `docs/01-requirements/00.achieteture_idea_v3.md` | Published architecture-design appendix for the canonical requirement |
 | `provider-spi-spec` | `docs/01-requirements/00.requirement_Provider_SPI_Specification.md` | Published Provider SPI appendix |
 | `privategpt-adapter-arch-v2` | `docs/01-requirements/00.requirement_PrivateGPT_Adapter_Architecture_v2.md` | Published architecture appendix |
 | `plugin-code` | `docs/01-requirements/plugin-code` | Java plugin reference code |

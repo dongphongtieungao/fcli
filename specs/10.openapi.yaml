@@ -1,29 +1,394 @@
 openapi: 3.1.0
 info:
-  title: New Project API
-  version: 0.1.0
-  description: >
-    Starter OpenAPI contract for the new project. Replace or extend this file
-    only when the project exposes an API surface.
-servers: []
+  title: OpenCode PrivateGPT Bridge API
+  version: 0.1.0-draft
+  description: >-
+    Draft OpenAI-compatible local API contract used by OpenCode CLI to access
+    the OpenCode PrivateGPT Bridge MVP. The Bridge exposes only health, model
+    discovery, and chat completion surfaces. It is not a tool executor and
+    does not expose the PrivateGPT internal Agent or Conversation APIs.
+  contact:
+    name: OpenCode PrivateGPT Bridge MVP
+servers:
+  - url: http://127.0.0.1:4100
+    description: Default loopback-only developer endpoint; host and port are configurable.
 tags:
-  - name: sdd/generic
-    description: Generic reusable SDD API placeholder.
-paths: {}
+  - name: health
+    description: Local Bridge availability check.
+  - name: models
+    description: OpenCode-compatible model discovery for the MVP whitelist.
+  - name: chat
+    description: OpenAI-compatible chat completion surface used by OpenCode.
+paths:
+  /health:
+    get:
+      tags: [health]
+      operationId: getHealth
+      summary: Check that the local Bridge is reachable
+      description: >-
+        Confirms local server availability. The requirement does not yet define
+        a health response payload; callers must not depend on fields beyond a
+        successful response until runtime validation is complete.
+      responses:
+        '200':
+          description: The local Bridge is reachable.
+  /v1/models:
+    get:
+      tags: [models]
+      operationId: listModels
+      summary: List models supported by the Bridge MVP
+      description: >-
+        Returns only the public alias gemini-2.5-pro. The Bridge resolves the
+        corresponding PrivateGPT internal model ID and must not fall back to a
+        different model.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: The supported model list.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelList'
+              examples:
+                mvpModelList:
+                  value:
+                    object: list
+                    data:
+                      - id: gemini-2.5-pro
+                        object: model
+                        created: 0
+                        owned_by: privategpt
+        default:
+          $ref: '#/components/responses/BridgeError'
+  /v1/chat/completions:
+    post:
+      tags: [chat]
+      operationId: createChatCompletion
+      summary: Create an OpenAI-compatible chat completion through PrivateGPT
+      description: >-
+        Validates the model, ensures authentication and a synchronized
+        workspace Agent, then maps OpenCode messages to a PrivateGPT Agent Mode
+        conversation. Every upstream conversation includes metadata.agent_id;
+        the Bridge sends tools: [] upstream and never executes a tool.
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCompletionRequest'
+            examples:
+              nonStreamingRequest:
+                summary: Direct smoke-test request
+                value:
+                  model: gemini-2.5-pro
+                  stream: false
+                  messages:
+                    - role: user
+                      content: Reply with OK only.
+      responses:
+        '200':
+          description: >-
+            An OpenAI-compatible JSON response when stream is false, or an SSE
+            response when stream is true. Streaming ends with [DONE].
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCompletion'
+              examples:
+                nonStreamingResponse:
+                  value:
+                    id: chatcmpl-privategpt-example
+                    object: chat.completion
+                    created: 1710000000
+                    model: gemini-2.5-pro
+                    choices:
+                      - index: 0
+                        message:
+                          role: assistant
+                          content: OK
+                        finish_reason: stop
+                    usage:
+                      prompt_tokens: 0
+                      completion_tokens: 0
+                      total_tokens: 0
+            text/event-stream:
+              schema:
+                type: string
+                description: >-
+                  OpenAI-compatible SSE frames followed by [DONE]. The exact
+                  chunk-event schema is pending redacted runtime capture.
+              examples:
+                done:
+                  value: "data: [DONE]\\n\\n"
+        default:
+          $ref: '#/components/responses/BridgeError'
 components:
-  schemas: {}
-  responses: {}
-  parameters: {}
-  securitySchemes: {}
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: local-adapter-api-key
+      description: >-
+        Local adapter API key configured for the OpenCode provider. Actual key
+        values must be supplied through the approved local configuration and
+        must never appear in logs or contract examples.
+  schemas:
+    ModelList:
+      type: object
+      required: [object, data]
+      properties:
+        object:
+          type: string
+          const: list
+        data:
+          type: array
+          minItems: 1
+          maxItems: 1
+          items:
+            $ref: '#/components/schemas/Model'
+      additionalProperties: false
+    Model:
+      type: object
+      required: [id, object, created, owned_by]
+      properties:
+        id:
+          type: string
+          const: gemini-2.5-pro
+        object:
+          type: string
+          const: model
+        created:
+          type: integer
+          const: 0
+        owned_by:
+          type: string
+          const: privategpt
+      additionalProperties: false
+    ChatCompletionRequest:
+      type: object
+      required: [model, messages]
+      properties:
+        model:
+          type: string
+          const: gemini-2.5-pro
+          description: The only public model alias supported in the MVP.
+        messages:
+          type: array
+          minItems: 1
+          description: >-
+            OpenCode messages. System and developer messages are preserved by
+            the Bridge when rendering the PrivateGPT question. Attached or
+            multimodal content is outside the confirmed MVP contract.
+          items:
+            $ref: '#/components/schemas/ChatMessage'
+        stream:
+          type: boolean
+          default: false
+          description: Selects JSON response (false) or SSE response (true).
+      additionalProperties: true
+      description: >-
+        The confirmed MVP request fields are model, messages, and stream.
+        OpenCode tool-call payload details are pending the required compatibility
+        spike; unsupported tool requirements must be rejected clearly when they
+        cannot be safely ignored.
+    ChatMessage:
+      type: object
+      required: [role, content]
+      properties:
+        role:
+          type: string
+          description: OpenCode message role; system and developer roles are preserved.
+        content:
+          type: string
+          description: Message content supplied to the Bridge.
+      additionalProperties: true
+    ChatCompletion:
+      type: object
+      required: [id, object, created, model, choices, usage]
+      properties:
+        id:
+          type: string
+          description: Bridge-generated OpenAI-compatible chat completion ID.
+        object:
+          type: string
+          const: chat.completion
+        created:
+          type: integer
+          description: Creation timestamp. Unit is not yet specified by the canonical requirement.
+        model:
+          type: string
+          const: gemini-2.5-pro
+        choices:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/ChatCompletionChoice'
+        usage:
+          $ref: '#/components/schemas/Usage'
+      additionalProperties: false
+    ChatCompletionChoice:
+      type: object
+      required: [index, message, finish_reason]
+      properties:
+        index:
+          type: integer
+        message:
+          $ref: '#/components/schemas/AssistantMessage'
+        finish_reason:
+          type: string
+          const: stop
+      additionalProperties: false
+    AssistantMessage:
+      type: object
+      required: [role, content]
+      properties:
+        role:
+          type: string
+          const: assistant
+        content:
+          type: string
+          description: Visible assistant content after internal reasoning markers are filtered.
+      additionalProperties: false
+    Usage:
+      type: object
+      required: [prompt_tokens, completion_tokens, total_tokens]
+      properties:
+        prompt_tokens:
+          type: integer
+          minimum: 0
+        completion_tokens:
+          type: integer
+          minimum: 0
+        total_tokens:
+          type: integer
+          minimum: 0
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      additionalProperties: true
+      description: >-
+        Error response body is not yet standardized. Confirmed error identifiers
+        include model_not_supported, login_required, token_refresh_failed, and
+        privategpt_agent_instruction_mismatch. HTTP status mapping and complete
+        payload fields require runtime/API validation.
+  responses:
+    BridgeError:
+      description: >-
+        A mapped Bridge error. The exact HTTP status and body schema remain a
+        validation condition; error responses must not disclose credentials,
+        raw prompts, source code, cookies, or internal stack details.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+x-opencode-provider-configuration:
+  provider: privategpt
+  npm: '@ai-sdk/openai-compatible'
+  baseURL: http://127.0.0.1:4100/v1
+  model: privategpt/gemini-2.5-pro
+  apiKey: '{env:PRIVATEGPT_ADAPTER_API_KEY}'
+x-opencode-compatibility-profile:
+  confirmed_from_local_documentation:
+    - OpenCode identifies a custom model as provider_id/model_id.
+    - The custom provider ID and model ID come from provider and provider.models configuration keys.
+    - Model and agent options may be passed through to the provider.
+    - OpenCode owns workspace permissions and approval decisions.
+  confirmed_mvp_subset:
+    - String-content chat messages using gemini-2.5-pro.
+    - Non-streaming JSON chat completion responses.
+    - OpenAI-compatible SSE responses terminated by [DONE].
+  requires_runtime_capture:
+    - Exact request generated by the installed @ai-sdk/openai-compatible version.
+    - Native tools, tool_choice, tool result messages, and finish-reason expectations.
+    - Structured or attached message content generated by the OpenCode --file option.
+    - Provider-specific options that must be mapped, ignored, or rejected.
+x-contract-limitations:
+  - The exact OpenCode request payload has not yet been captured for the pilot version.
+  - Native OpenAI tool calling is not part of the MVP unless the compatibility spike proves it is required.
+  - The reference ChatRequest builder has a legacy default model value; the Bridge must always set the resolved PrivateGPT internal model ID for gemini-2.5-pro explicitly.
+  - The reference plugin observes PrivateGPT SSE event types data, mes_info, conv, hint, and DONE, but a redacted runtime capture is still required before treating that upstream event shape as current API truth.
+  - Attached or multimodal OpenCode content is outside the confirmed MVP contract.
+  - Error HTTP statuses and response payload fields require runtime/API validation before this contract can be published.
+x-reference-evidence:
+  status: observed_reference_code_and_local_cli_documentation
+  source_of_truth_note: >-
+    The canonical requirement remains the source of business scope. These
+    observations validate integration direction only and do not promote the
+    plugin implementation or static OpenCode pages to runtime API truth.
+  privategpt_plugin_code:
+    model_discovery:
+      path: docs/01-requirements/plugin-code/com/tubitech/copilot/api/ModelApiClientImpl.java
+      observed_request: GET /api/chat/v1/conversations/support-models with Bearer authentication and Accept application/json
+    agent_lifecycle:
+      path: docs/01-requirements/plugin-code/com/tubitech/copilot/api/AgentApiClientImpl.java
+      observed_endpoints:
+        - GET /api/chat/v1/agents/discovery/created_by
+        - POST /api/chat/v1/agents
+        - PUT /api/chat/v1/agents/{agentId}
+        - GET /api/chat/v1/agents/{agentId}
+    conversation:
+      paths:
+        - docs/01-requirements/plugin-code/com/tubitech/copilot/api/ConversationApiClientImpl.java
+        - docs/01-requirements/plugin-code/com/tubitech/copilot/api/model/ChatRequest.java
+        - docs/01-requirements/plugin-code/com/tubitech/copilot/api/model/MessageMetadata.java
+      observed_request: POST /api/chat/v1/conversations with Bearer authentication, Content-Type application/json, and Accept text/event-stream
+      observed_fields:
+        - parent_message_id
+        - conversation_id
+        - question
+        - metadata.attachments
+        - metadata.agent_id
+        - metadata.reasoning_effort
+        - model_id
+        - tools
+    sse_parser:
+      path: docs/01-requirements/plugin-code/com/tubitech/copilot/api/streaming/SseEventListener.java
+      observed_event_types: [data, mes_info, conv, hint, DONE]
+      observed_behavior: >-
+        data events use JSON field v for visible token content; reasoning-like
+        message types are filtered; mes_info and conv may provide message and
+        conversation identifiers; EOF completes the stream.
+    intentionally_excluded_legacy_runtime:
+      paths:
+        - docs/01-requirements/plugin-code/com/tubitech/copilot/agent/loop/AgentLoopRunner.java
+        - docs/01-requirements/plugin-code/com/tubitech/copilot/agent/tools/ToolRegistry.java
+      behavior: >-
+        The IntelliJ plugin parses plugin-style <tool_call> tags and executes
+        tools through ToolRegistry. The Bridge must not copy or expose this
+        runtime; OpenCode remains responsible for tools and approvals.
+  opencode_cli_documentation:
+    paths:
+      - docs/01-requirements/opencode-cli-doc/CLI _ OpenCode.html
+      - docs/01-requirements/opencode-cli-doc/Models _ OpenCode.html
+      - docs/01-requirements/opencode-cli-doc/Agents _ OpenCode.html
+    observed_behavior:
+      - OpenCode uses the AI SDK provider ecosystem.
+      - OpenCode selects models in provider/model form.
+      - A custom provider ID and model ID are derived from provider and provider.models configuration keys.
+      - Provider-specific agent options may be passed through to the configured provider.
+      - OpenCode owns permissions for workspace actions such as read, edit, and bash.
+      - The CLI can attach files, but attached-content request shape is not defined by the available local pages.
 x-governance:
+  type: contract_spec
   category: spec_test
   status: draft
-  tags:
-    - sdd/openapi
-    - sdd/reusable
-    - sdd/generic
   source_of_truth:
-    - docs/grounding/manifest.yaml
-    - docs/grounding/sources.md
+    - docs/01-requirements/00.requirement.md
+    - docs/01-requirements/01.use-cases.md
+    - docs/03-business-analysis/09.bpmn.md
+    - tests/features/chat_completion.feature
+    - tests/features/bridge_lifecycle.feature
+    - tests/features/opencode_pilot.feature
+    - docs/01-requirements/opencode-cli-doc
+    - docs/02-architecture/08.standards.md
     - docs/04-spec-test/12.governance-spectral.md
-  usage_rule: "Do not treat this placeholder as an implemented API."
+  related:
+    - docs/06-quality-assurance/14.qa-matrix.md
+    - tests/bdd/traceability.md
+  usage_rule: >-
+    Use as the draft local Bridge contract for implementation and contract tests.
+    Do not claim complete OpenCode wire compatibility until the listed runtime
+    validation conditions have evidence.

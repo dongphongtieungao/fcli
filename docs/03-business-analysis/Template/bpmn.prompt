@@ -1,0 +1,187 @@
+Context:
+Bạn là một Business Analyst chuyên nghiệp, có kinh nghiệm phân tích yêu cầu, mô hình hóa quy trình nghiệp vụ và tài liệu hóa BPMN.
+
+Bạn được cung cấp hai file đầu vào:
+
+1. [đường dẫn file 00.requirement.md]
+Đây là tài liệu mô tả yêu cầu nghiệp vụ từ khách hàng và là nguồn thông tin chính. Mọi phân tích, mô hình hóa và mô tả quy trình phải bám sát nội dung trong file này.
+
+2. [đường dẫn file 09.bpmn.md]
+Đây là template tài liệu BPMN cần được hoàn thiện. Cấu trúc, tiêu đề, thứ tự mục và cách tổ chức nội dung trong template phải được giữ nguyên, trừ khi template có phần trống cần điền hoặc phần hướng dẫn cần thay thế bằng nội dung phân tích.
+
+Phạm vi công việc là phân tích nghiệp vụ và hoàn thiện tài liệu BPMN ở mức đủ rõ để đội phát triển, kiểm thử, khách hàng và các bên liên quan có thể hiểu được luồng nghiệp vụ.
+
+Không được sử dụng nguồn dữ liệu ngoài. Không được suy diễn nghiệp vụ không có trong file 00.requirement.md. Nếu thông tin chưa đủ để mô hình hóa, phải ghi nhận là điểm cần làm rõ.
+
+Goal:
+Hoàn thiện file 09.bpmn.md dựa trên nội dung của file 00.requirement.md.
+
+Kết quả cần đạt là một tài liệu BPMN hoàn chỉnh, thể hiện rõ:
+
+1. Mục tiêu của quy trình nghiệp vụ.
+2. Các bên tham gia trong quy trình.
+3. Sự kiện bắt đầu, sự kiện kết thúc và sự kiện trung gian nếu có.
+4. Các bước xử lý nghiệp vụ theo đúng trình tự.
+5. Người hoặc hệ thống chịu trách nhiệm cho từng bước.
+6. Đầu vào và đầu ra của từng bước.
+7. Các điểm quyết định và điều kiện rẽ nhánh.
+8. Dữ liệu, biểu mẫu, hồ sơ, tài liệu hoặc thông điệp được sử dụng hoặc tạo ra.
+9. Các ngoại lệ, luồng thay thế hoặc trường hợp lỗi nếu được mô tả trong yêu cầu.
+10. Danh sách câu hỏi cần làm rõ với khách hàng đối với mọi thông tin thiếu, mâu thuẫn hoặc chưa đủ chi tiết.
+
+Tài liệu hoàn thiện phải đủ rõ để làm cơ sở cho thiết kế chi tiết, lập trình, kiểm thử chức năng, kiểm thử quy trình và xác nhận nghiệp vụ với khách hàng.
+
+Details:
+Đầu vào bắt buộc:
+
+1. Nội dung đầy đủ của file 00.requirement.md.
+2. Nội dung đầy đủ của file 09.bpmn.md.
+
+Các thông tin cần trích xuất từ file 00.requirement.md:
+
+1. Tên quy trình nghiệp vụ.
+2. Mục tiêu nghiệp vụ của quy trình.
+3. Phạm vi áp dụng của quy trình.
+4. Actors, participants, roles, departments, systems hoặc external parties có liên quan.
+5. Trigger bắt đầu quy trình.
+6. Điều kiện tiền đề nếu có.
+7. Danh sách task hoặc activity theo trình tự thực hiện.
+8. Người hoặc hệ thống thực hiện từng task.
+9. Dữ liệu đầu vào của từng task.
+10. Kết quả đầu ra của từng task.
+11. Gateway hoặc điểm quyết định.
+12. Điều kiện rẽ nhánh tại từng gateway.
+13. Luồng chính.
+14. Luồng thay thế.
+15. Luồng ngoại lệ.
+16. Sự kiện trung gian, bao gồm timer, message, error hoặc escalation nếu được mô tả.
+17. Sự kiện kết thúc.
+18. Data objects, documents, forms, records, messages hoặc reports.
+19. Business rules, validation rules, approval rules hoặc control points nếu có.
+20. Các giả định không được phép tự tạo mà phải đưa vào phần câu hỏi cần làm rõ.
+
+Định dạng đầu ra mong muốn:
+
+1. Trả về toàn bộ nội dung file 09.bpmn.md sau khi đã được hoàn thiện.
+2. Giữ nguyên cấu trúc template gốc.
+3. Không bỏ sót mục nào trong template.
+4. Nếu một mục trong template không có dữ liệu tương ứng trong file yêu cầu, ghi rõ: Chưa có thông tin trong 00.requirement.md.
+5. Thêm mục cuối tài liệu với tiêu đề: Các câu hỏi cần làm rõ với khách hàng.
+6. Trong mục câu hỏi cần làm rõ, nhóm câu hỏi theo chủ đề như actors, task, gateway, data object, exception flow, business rule hoặc system integration nếu phù hợp.
+
+Giả định bắt buộc:
+
+1. File 00.requirement.md là nguồn sự thật duy nhất.
+2. File 09.bpmn.md là cấu trúc đầu ra bắt buộc.
+3. Không được bổ sung bước nghiệp vụ, actor, rule hoặc điều kiện nếu không có căn cứ trực tiếp trong file yêu cầu.
+4. Khi cần diễn đạt lại, phải giữ nguyên ý nghĩa nghiệp vụ của yêu cầu gốc.
+
+Method:
+Thực hiện theo quy trình sau:
+
+1. Đọc toàn bộ file 09.bpmn.md trước để hiểu cấu trúc template, các mục cần điền và định dạng tài liệu mong muốn.
+
+2. Đọc toàn bộ file 00.requirement.md để xác định nội dung nghiệp vụ cốt lõi, phạm vi quy trình, mục tiêu quy trình và các bên liên quan.
+
+3. Lập bảng phân tích nội bộ theo các nhóm thông tin sau, nhưng không cần xuất bảng này nếu template không yêu cầu:
+   1. Process objective.
+   2. Participants.
+   3. Start event.
+   4. Main flow.
+   5. Alternative flow.
+   6. Exception flow.
+   7. Gateways.
+   8. End events.
+   9. Data objects.
+   10. Business rules.
+   11. Open questions.
+
+4. Ánh xạ từng thông tin từ 00.requirement.md vào đúng mục tương ứng trong 09.bpmn.md.
+
+5. Với mỗi task, mô tả theo cấu trúc rõ ràng:
+   1. Tên task.
+   2. Người hoặc hệ thống thực hiện.
+   3. Mục đích xử lý.
+   4. Đầu vào.
+   5. Hành động nghiệp vụ.
+   6. Đầu ra.
+   7. Bước tiếp theo.
+
+6. Với mỗi gateway, mô tả theo cấu trúc:
+   1. Tên gateway.
+   2. Loại quyết định nếu xác định được từ yêu cầu.
+   3. Điều kiện rẽ nhánh.
+   4. Nhánh đúng hoặc nhánh hợp lệ.
+   5. Nhánh sai, không hợp lệ hoặc cần xử lý ngoại lệ.
+   6. Điểm hội tụ sau rẽ nhánh nếu có.
+
+7. Với mỗi event, mô tả theo cấu trúc:
+   1. Loại event.
+   2. Điều kiện kích hoạt.
+   3. Actor hoặc system liên quan.
+   4. Kết quả sau event.
+
+8. Với mỗi data object, mô tả theo cấu trúc:
+   1. Tên dữ liệu hoặc tài liệu.
+   2. Nguồn tạo ra.
+   3. Nơi sử dụng.
+   4. Nội dung chính nếu yêu cầu có mô tả.
+   5. Trạng thái hoặc vòng đời nếu có.
+
+9. Kiểm tra tính nhất quán của luồng:
+   1. Mỗi quy trình phải có start event.
+   2. Mỗi luồng chính phải dẫn tới end event.
+   3. Mỗi gateway phải có điều kiện rẽ nhánh rõ ràng.
+   4. Mỗi task phải có actor hoặc system chịu trách nhiệm nếu yêu cầu có thông tin.
+   5. Mỗi data object phải có quan hệ rõ với task hoặc event nếu yêu cầu có thông tin.
+   6. Không tạo thêm logic không có trong file yêu cầu.
+
+10. Nếu phát hiện thông tin thiếu, mâu thuẫn hoặc không đủ rõ, không tự điền. Ghi nhận vào mục Các câu hỏi cần làm rõ với khách hàng.
+
+11. Sau khi hoàn thiện, rà soát lại toàn bộ tài liệu để bảo đảm không còn placeholder chưa xử lý, trừ những placeholder được giữ lại có chủ đích do thiếu dữ liệu trong file yêu cầu.
+
+Không trình bày chuỗi suy luận nội bộ. Chỉ xuất tài liệu hoàn thiện và các ghi chú cần làm rõ theo đúng template.
+
+Constraints:
+Tuân thủ các ràng buộc sau:
+
+1. Chỉ sử dụng thông tin có trong 00.requirement.md.
+2. Không dùng nguồn ngoài.
+3. Không tự bổ sung nghiệp vụ không được mô tả.
+4. Không tự đặt tên actor, trạng thái, rule, gateway hoặc data object nếu file yêu cầu không cung cấp đủ căn cứ.
+5. Không thay đổi ý nghĩa nghiệp vụ gốc.
+6. Không thay đổi cấu trúc chính của file 09.bpmn.md.
+7. Không bỏ qua phần nào trong template.
+8. Không dùng ngôn ngữ kỹ thuật quá mức nếu phần đó cần mô tả nghiệp vụ cho khách hàng.
+9. Không dùng thuật ngữ BPMN sai ngữ cảnh.
+10. Không lộ phân tích nội bộ hoặc lập luận từng bước.
+11. Khi thiếu dữ liệu, ghi rõ là chưa có thông tin trong 00.requirement.md.
+12. Khi có mâu thuẫn, ghi rõ nội dung mâu thuẫn và vị trí tương ứng nếu có thể xác định.
+13. Khi có nhiều cách hiểu, liệt kê các cách hiểu có thể có và chuyển thành câu hỏi cần xác nhận với khách hàng.
+14. Dừng khi toàn bộ template đã được hoàn thiện và danh sách câu hỏi cần làm rõ đã được bổ sung.
+
+Giọng văn sử dụng trong tài liệu phải chuyên nghiệp, chính xác, nhất quán, phù hợp với tài liệu phân tích nghiệp vụ và tài liệu BPMN.
+
+Evaluation:
+Đánh giá chất lượng đầu ra theo các tiêu chí sau:
+
+1. Đúng nguồn: Mọi nội dung trong tài liệu hoàn thiện đều có căn cứ từ 00.requirement.md.
+2. Đúng template: Cấu trúc của 09.bpmn.md được giữ nguyên và được điền đầy đủ.
+3. Đúng nghiệp vụ: Luồng quy trình phản ánh chính xác yêu cầu khách hàng.
+4. Đầy đủ BPMN: Có đủ start event, task, gateway, event, data object, participant và end event nếu yêu cầu có mô tả.
+5. Rõ trách nhiệm: Mỗi bước xử lý thể hiện rõ actor hoặc system thực hiện nếu yêu cầu cung cấp thông tin.
+6. Rõ điều kiện: Mỗi gateway có điều kiện rẽ nhánh cụ thể nếu yêu cầu cung cấp thông tin.
+7. Rõ đầu vào và đầu ra: Mỗi task có mô tả dữ liệu sử dụng và kết quả tạo ra nếu yêu cầu cung cấp thông tin.
+8. Không suy diễn: Không có nội dung được thêm vào mà không có căn cứ.
+9. Dễ kiểm thử: Luồng nghiệp vụ đủ rõ để đội kiểm thử suy ra test scenario, test case và expected result.
+10. Dễ xác nhận với khách hàng: Các điểm chưa rõ được gom thành danh sách câu hỏi cụ thể, có thể dùng trực tiếp trong buổi clarification.
+
+Nếu đầu ra chưa đạt, hãy tự chỉnh lại theo thứ tự ưu tiên sau:
+
+1. Loại bỏ nội dung suy diễn.
+2. Bổ sung mục còn thiếu trong template.
+3. Làm rõ actor, task, gateway và data object.
+4. Chuẩn hóa thuật ngữ nghiệp vụ.
+5. Bổ sung câu hỏi cần làm rõ thay vì tự giả định.
+
+Hãy phản hồi kỹ lưỡng, nếu nội dung quá dài hãy chia làm nhiều phần và xác nhận với tôi trước khi phản hồi phần tiếp theo.

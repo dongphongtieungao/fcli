@@ -1,0 +1,18 @@
+@startuml
+title C1 — System Context: OpenCode PrivateGPT Bridge MVP
+left to right direction
+
+actor "Developer" as developer
+rectangle "OpenCode CLI\nCoding workflow and approvals" as opencode
+rectangle "PrivateGPT Adapter\nLocal OpenAI-compatible bridge" as adapter
+rectangle "PrivateGPT Platform\nModel, Agent and Conversation APIs" as privategpt
+rectangle "Gemini 2.5 Pro" as model
+rectangle "PrivateGPT Login Browser" as browser
+
+developer --> opencode : runs and approves work
+developer --> browser : authenticates
+browser --> adapter : establishes session
+opencode --> adapter : OpenAI-compatible HTTP
+adapter --> privategpt : authenticated HTTPS\nAgent/model/conversation requests
+privategpt --> model : inference
+@enduml

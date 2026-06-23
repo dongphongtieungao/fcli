@@ -1,0 +1,38 @@
+@startuml
+title C3 — Components inside the PrivateGPT Adapter
+top to bottom direction
+
+package "PrivateGPT Adapter API Server" {
+  component "Web/API Layer\n/v1/models, /v1/chat/completions" as api
+  component "Request Validation\nand Error Mapping" as validation
+  component "Gateway Pipeline" as gateway
+  component "Agent Service\nworkspace Agent synchronization" as agent
+  component "Provider Registry\nand Provider SPI" as spi
+  component "PrivateGPT Provider" as provider
+  component "Model Resolver" as modelresolver
+  component "Token Manager" as tokenmanager
+  component "ChatRequest Builder" as builder
+  component "SSE Parser and\nOpenAI Response Mapper" as sse
+  component "Resilience Layer\nretry/circuit breaker" as resilience
+  component "PrivateGPT HTTP Client" as http
+  component "Redacted Logging\nand Diagnostics" as logging
+
+  api --> validation
+  validation --> gateway
+  gateway --> agent
+  gateway --> spi
+  spi --> provider
+  agent --> modelresolver
+  agent --> tokenmanager
+  agent --> builder
+  provider --> http
+  modelresolver --> http
+  builder --> http
+  http --> resilience
+  resilience --> sse
+  sse --> api : response or SSE relay
+  api --> logging
+  agent --> logging
+  http --> logging
+}
+@enduml

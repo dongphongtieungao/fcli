@@ -6,7 +6,7 @@ owner: unknown
 domain: grounding
 project: fcli
 created: 2026-05-13
-updated: 2026-06-22
+updated: 2026-06-23
 sensitivity: internal
 source_of_truth:
   - AGENTS.md
@@ -43,29 +43,31 @@ The catalog is domain-neutral, not empty. It should preserve reusable source IDs
 | `data-governance-baseline` | `docs/00-governance/00.data-governance.md` | governance | unknown | Data classification, retention, quality, access, auditability | official | Use when data sources or data controls are introduced |
 | `governance-rules-baseline` | `docs/00-governance/00.governance-rules.md` | governance | unknown | Reusable repository governance | official | Use when changing source-of-truth or repository controls |
 | `patterns-anti-patterns-baseline` | `docs/00-governance/00.patterns-anti-patterns.md` | governance | unknown | Reusable practices and cleanup anti-patterns | official | Use when reviewing methodology or cleanup behavior |
-| `requirements-index` | `docs/01-requirements/00.requirement.md` | requirement | unknown | Published PrivateGPT Adapter requirement (compatibility alias) | official | Use as the primary requirement index for PrivateGPT Adapter work |
-| `privategpt-adapter-requirement` | `docs/01-requirements/00.requirement.md` | requirement | unknown | Canonical PrivateGPT Adapter MVP requirement | official | Use as the authoritative requirement for PrivateGPT Adapter implementation |
+| `requirements-index` | `docs/01-requirements/00.requirement.md` | requirement | unknown | Published OpenCode PrivateGPT Bridge requirement (compatibility alias) | official | Use as the primary requirement index for OpenCode PrivateGPT Bridge work |
+| `privategpt-adapter-requirement` | `docs/01-requirements/00.requirement.md` | requirement | unknown | Canonical OpenCode PrivateGPT Bridge MVP requirement | official | Use as the authoritative requirement for OpenCode PrivateGPT Bridge implementation |
+| `privategpt-adapter-architecture-design` | `docs/01-requirements/00.achieteture_idea_v3.md` | architecture | unknown | Published architecture-design appendix for the canonical requirement | official | Use for the published local Python bridge architecture rationale and design boundaries; the parent requirement remains authoritative for scope. |
 | `provider-spi-spec` | `docs/01-requirements/00.requirement_Provider_SPI_Specification.md` | contract_spec | unknown | Published Provider SPI appendix | official | Use when implementing Provider SPI adapters or validating provider boundaries |
-| `privategpt-adapter-arch-v2` | `docs/01-requirements/00.requirement_PrivateGPT_Adapter_Architecture_v2.md` | architecture | unknown | Published PrivateGPT Adapter architecture appendix | official | Use when planning or validating the adapter architecture and sync rules |
-| `business-requirements` | `docs/01-requirements/00.final-business-requirements.md` | requirement | unknown | Approved business requirements | official | Use when a requirement becomes business-facing scope |
+| `privategpt-adapter-arch-v2` | `docs/01-requirements/00.requirement_PrivateGPT_Adapter_Architecture_v2.md` | architecture | unknown | Published OpenCode PrivateGPT Bridge architecture appendix | official | Use when planning or validating the adapter architecture and sync rules |
+| `business-requirements` | `docs/01-requirements/00.final-business-requirements.md` | requirement | unknown | Published OpenCode PrivateGPT Bridge MVP business requirements | official | Use as the business-facing scope and acceptance source for OpenCode PrivateGPT Bridge work |
 | `use-cases` | `docs/01-requirements/01.use-cases.md` | use_case | unknown | Use cases and acceptance drafts | official | Use when mapping actors, flows, and acceptance criteria |
-| `architecture-glossary` | `docs/02-architecture/02.glossary.md` | glossary | unknown | Published PrivateGPT Adapter technical terminology and boundaries | official | Use when terminology, integration boundaries, or technical contracts change |
+| `architecture-glossary` | `docs/02-architecture/02.glossary.md` | glossary | unknown | Published OpenCode PrivateGPT Bridge technical terminology and boundaries | official | Use when terminology, integration boundaries, or technical contracts change |
 | `architecture-vision` | `docs/02-architecture/03.vision.md` | vision | unknown | Goals, non-goals, scope | official | Use when project direction needs grounding |
-| `architecture-c4` | `docs/02-architecture/04.architecture-c4.md` | architecture_c4 | unknown | Architecture boundaries and components | official | Use for C4 or boundary changes |
-| `architecture-nfr` | `docs/02-architecture/05.nfr.md` | nfr | unknown | Non-functional requirements | official | Use for security, performance, reliability, or operability constraints |
-| `architecture-adr` | `docs/02-architecture/06.adr.md` | adr | unknown | Decisions and trade-offs | official | Use for architecture decisions |
-| `architecture-standards` | `docs/02-architecture/08.standards.md` | standards | unknown | Standards and coding guidance | official | Use when standards change |
-| `business-glossary` | `docs/03-business-analysis/02.glossary.md` | glossary | unknown | Published PrivateGPT Adapter actor and acceptance terminology | official | Use when business terminology, pilot scope, or acceptance wording changes |
-| `privategpt-adapter-business-glossary` | `docs/03-business-analysis/02.glossary.md` | glossary | unknown | PrivateGPT Adapter business glossary alias | official | Use when mapping the canonical requirement to actors, pilot behavior, or acceptance criteria |
-| `business-bpmn` | `docs/03-business-analysis/09.bpmn.md` | bpmn | unknown | Business flows and workflow | official | Use when behavior or workflow changes |
+| `architecture-c4` | `docs/02-architecture/04.architecture-c4.md` | architecture_c4 | unknown | Published C4 boundaries for the local Python bridge | official | Use when changing actors, containers, components, dependency direction, Agent binding or streaming flow |
+| `architecture-nfr` | `docs/02-architecture/05.nfr.md` | nfr | unknown | Published MVP quality constraints and verification expectations | official | Use when security, reliability, streaming, performance, operability or maintainability constraints are affected |
+| `architecture-adr` | `docs/02-architecture/06.adr.md` | adr | unknown | Published decision register for the MVP architecture | official | Use when a boundary, deployment, provider, Agent, resilience or credential decision changes |
+| `architecture-standards` | `docs/02-architecture/08.standards.md` | standards | unknown | Published Python, security, contract and verification standards | official | Use when coding, review, architecture or documentation standards are affected |
+| `business-glossary` | `docs/03-business-analysis/02.glossary.md` | glossary | unknown | Published OpenCode PrivateGPT Bridge actor and acceptance terminology | official | Use when business terminology, pilot scope, or acceptance wording changes |
+| `privategpt-adapter-business-glossary` | `docs/03-business-analysis/02.glossary.md` | glossary | unknown | OpenCode PrivateGPT Bridge business glossary alias | official | Use when mapping the canonical requirement to actors, pilot behavior, or acceptance criteria |
+| `business-bpmn` | `docs/03-business-analysis/09.bpmn.md` | bpmn | unknown | Published BPMN for Bridge startup, login, Agent sync and chat completion | official | Use when analyzing business flow, BPMN gateways, process exceptions or acceptance scenarios for the Bridge MVP |
+| `privategpt-adapter-bdd-acceptance` | `tests/features/*.feature`, `tests/bdd/` | executable_spec | unknown | Gherkin acceptance specifications and BPMN-to-BDD traceability for the Bridge MVP | official | Use when deriving, implementing, reviewing, or verifying acceptance behavior; the canonical requirement and BPMN remain the source for business scope. |
 | `spec-jsonschema-governance` | `docs/04-spec-test/11.governance-jsonschema-rules.md` | contract_spec | unknown | JSON Schema governance | official | Use when schema validation rules are introduced |
 | `spec-spectral-governance` | `docs/04-spec-test/12.governance-spectral.md` | contract_spec | unknown | OpenAPI/API lint governance | official | Use when API lint rules are introduced |
-| `prompt-guardrails` | `docs/06-quality-assurance/13.prompt-guardrails.md` | prompt_guardrails | unknown | Prompt and agent quality guardrails | official | Use when prompt behavior or agent controls change |
-| `qa-matrix` | `docs/06-quality-assurance/14.qa-matrix.md` | qa_matrix | unknown | Verification expectations and evidence | official | Use when choosing validation checks |
-| `quality-matrix` | `docs/07-ci-cd-review/15.quality-matrix.md` | quality_matrix | unknown | Quality gates and CI expectations | official | Use when quality gates change |
-| `review-checklists` | `docs/07-ci-cd-review/16.review-checklists.md` | review_checklist | unknown | Review criteria | official | Use when review expectations change |
-| `definition-of-ready` | `docs/09-runbook/17.dor.md` | dor | unknown | Readiness gate | official | Use before implementation or release work |
-| `definition-of-done` | `docs/09-runbook/18.dod.md` | dod | unknown | Done evidence gate | official | Use before claiming completion |
+| `prompt-guardrails` | `docs/06-quality-assurance/13.prompt-guardrails.md` | prompt_guardrails | unknown | AI scope, safety, tool/file, contract-gap and evidence guardrails for the Bridge | official | Read before AI planning, implementation or review that can affect Bridge behavior or contracts. |
+| `qa-matrix` | `docs/06-quality-assurance/14.qa-matrix.md` | qa_matrix | unknown | Functional/NFR checks mapped from requirement and spec to required evidence | official | Use to select affected QA rows, fixtures, test level and evidence before implementation or verification. |
+| `quality-matrix` | `docs/07-ci-cd-review/15.quality-matrix.md` | quality_matrix | unknown | CI/PR quality gates, change-type mapping and blocking rules | official | Use to decide which automated/manual gates must pass before merge or handover. |
+| `review-checklists` | `docs/07-ci-cd-review/16.review-checklists.md` | review_checklist | unknown | PR/design review criteria linked to QA and quality-gate IDs | official | Use for Bridge PR, contract, security, streaming, file-context and release review. |
+| `definition-of-ready` | `docs/09-runbook/17.dor.md` | dor | unknown | Task-packet and readiness criteria for independent planner/coder/tester/verifier execution | official | Use before implementation to resolve scope, sources, scenarios, PG/QA/QG IDs, gaps and expected evidence. |
+| `definition-of-done` | `docs/09-runbook/18.dod.md` | dod | unknown | Evidence, review, KMS and handover completion contract | official | Use before merge, release or handover to assign a scope-qualified verdict and assemble the reusable handover packet. |
 | `release-case-study` | `docs/10-release/sdd-case-study-report.md` | technical_note | unknown | Release and case-study evidence outline | draft | Use for release or case-study evidence planning |
 | `grounding-manifest-human` | `docs/grounding/manifest.md` | manifest | unknown | Human-readable grounding map | official | Use as grounding entrypoint |
 | `grounding-manifest-machine` | `docs/grounding/manifest.yaml` | manifest | unknown | Machine-readable source registry | official | Use for source IDs and coverage |
@@ -98,8 +100,9 @@ The catalog is domain-neutral, not empty. It should preserve reusable source IDs
 | `shared-skill-archive-current-task` | `.agents/skills/archive-current-task/SKILL.md` | guide | unknown | Task archive adapter (shared) | official | Adapter for `docs/grounding/skills/8.archive-current-task.md` |
 | `shared-skill-create-current-task` | `.agents/skills/create-current-task/SKILL.md` | guide | unknown | Task creation adapter (shared) | official | Adapter for `docs/grounding/skills/9.create-current-task.md` |
 | `skill-plan-task` | `docs/grounding/skills/10.plan-task.md` | methodology | governance | SDD planning orchestrator | official | Use before non-trivial implementation to build a structured plan |
-| `starter-openapi` | `specs/10.openapi.yaml` | openapi | unknown | Starter API contract placeholder | draft | Use only after project APIs are defined |
-| `starter-application-spec` | `docs/04-spec-test/application-spec.md` | application_spec | unknown | Starter application interface placeholder | draft | Use only after project interfaces or operations are defined |
+| `privategpt-adapter-openapi` | `specs/10.openapi.yaml` | openapi | unknown | Draft OpenAI-compatible local Bridge API contract for OpenCode integration | draft | Use for local Bridge implementation and contract tests; do not claim complete wire compatibility until the documented runtime-validation gaps are resolved. |
+| `privategpt-adapter-application-spec` | `docs/04-spec-test/application-spec.md` | application_spec | unknown | Draft application contract for Bridge CLI, local API and runtime flows | draft | Use when implementing or verifying Bridge lifecycle, configuration, auth, Agent sync, chat/SSE, error, file-context and observability behavior. |
+| `starter-application-spec` | `docs/04-spec-test/application-spec.md` | application_spec | unknown | Compatibility alias for the current project application specification | draft | Resolve to `privategpt-adapter-application-spec`; retained for generic prompt references. |
 | `starter-application-schema` | `specs/schemas/tools/application.schema.json` | application_spec | unknown | Starter application/tool schema placeholder | draft | Use only after project interfaces or operations are defined |
 
 ## Source Group Rules
