@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "privategpt-adapter"
+version = "0.1.0"
+description = "Local OpenAI-compatible bridge from OpenCode CLI to PrivateGPT"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "httpx>=0.28,<1",
+  "pydantic>=2.10,<3",
+  "uvicorn>=0.34,<1",
+]
+
+[project.scripts]
+privategpt-adapter = "src.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3,<10",
+  "pytest-asyncio>=0.25,<2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+asyncio_mode = "auto"
+pythonpath = ["src"]
+testpaths = ["tests/unit"]

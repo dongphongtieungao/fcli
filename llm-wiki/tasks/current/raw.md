@@ -1,43 +1,37 @@
 ---
-type: technical_note
-status: draft
-owner: unknown
-domain: workspace
+id: task-sync-code-requirement-architecture-raw
+title: Raw Request — Code and Documentation Synchronization
+type: task_memory
+status: observed
+owner: agent
+domain: privategpt-adapter
 project: fcli
-created: 2026-05-13
-updated: 2026-05-13
+created: 2026-06-23
+updated: 2026-06-23
 sensitivity: internal
 source_of_truth:
-  - AGENTS.md
+  - Current user instruction, 2026-06-23
 related:
-  - TASK.md
-  - intake.md
+  - llm-wiki/tasks/current/TASK.md
 tags:
   - workspace/task
-  - raw-input
+  - raw-request
 ---
 
-# Raw Request
+# Raw Request — Code and Documentation Synchronization
 
 ## Purpose
 
-Preserve the original user request before interpretation.
+Preserve the user request without treating it as an implementation source of truth.
+
+## Request
+
+“đánh giá hiện trạng đồng bộ giữa code và tài liệu nghiệp vụ `docs/01-requirements/00.requirement.md` và thiết kế kiến trúc `docs/02-architecture/04.architecture-c4.md` giúp tôi. nếu code chưa đồng bộ, hãy implement hoặc refactoring để triển khai hoàn thiện ứng dụng theo yêu cầu và thiết kế.”
 
 ## Context
 
-Received on 2026-05-13 in the repository workspace.
-
-## Original Text
-
-```text
-[$create-current-task](C:\\Sk\\Dba\\fcli\\.agents\\skills\\create-current-task\\SKILL.md) "tôi cần khởi tạo mới 1 project. tôi đã hãy loại bỏ phần lớn code và các tài liệu liên quan đến dữ án cũ. bạn hãy rà soát lại và clean nội dung và tài liệu liên quan đến dự án cũ để tôi có thể sử dụng project hiện tại như là cấu trúc khởi điểm của project mới."
-```
-
-## Notes
-
-The request appears to mean: the user has already removed most old project code and documents, and now wants this repository reviewed and cleaned so it can serve as a starter structure for a new project.
+The request explicitly authorizes assessment, implementation, and refactoring within the approved requirement and architecture scope.
 
 ## Related
 
-- [TASK.md](./TASK.md)
-- [intake.md](./intake.md)
+- [Task](./TASK.md)

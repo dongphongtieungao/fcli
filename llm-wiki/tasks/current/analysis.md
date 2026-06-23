@@ -1,64 +1,47 @@
 ---
-type: technical_note
+id: task-sync-code-requirement-architecture-analysis
+title: Analysis — Code and Documentation Synchronization
+type: task_memory
 status: draft
-owner: unknown
-domain: workspace
+owner: agent
+domain: privategpt-adapter
 project: fcli
-created: 2026-05-13
-updated: 2026-05-13
+created: 2026-06-23
+updated: 2026-06-23
 sensitivity: internal
 source_of_truth:
-  - AGENTS.md
-  - docs/grounding/skills/9.create-current-task.md
-  - docs/methodology/Task.md
+  - docs/01-requirements/00.requirement.md
+  - docs/02-architecture/04.architecture-c4.md
 related:
-  - TASK.md
-  - intake.md
-  - verification-notes.md
+  - llm-wiki/tasks/current/TASK.md
+  - llm-wiki/tasks/current/intake.md
 tags:
   - workspace/task
   - analysis
 ---
 
-# Cleanup Analysis
+# Analysis — Code and Documentation Synchronization
 
 ## Purpose
 
-Capture inventory findings and cleanup reasoning during the project reset.
+Record the conformance assessment, contradictions, and implementation decisions as evidence is collected.
 
 ## Context
 
-Initial task creation has not yet performed repository cleanup. This file is ready to record findings from scans and decisions about what is reusable structure versus legacy project content.
+Official sources, executable specifications, source boundaries, and the related archived implementation task were inspected.
 
-## Initial Hypothesis
+## Findings
 
-The repository likely still contains official docs and agent policy that reference the old project. Because those files define source-of-truth and operating rules, they should be inventoried before any broad deletion or rewrite.
+1. The C4 implementation inventory was stale: it named deleted skeleton paths while the current source uses `src/api/router.py`, `src/services/gateway.py`, `src/services/agent_service.py`, and `src/providers/privategpt.py`.
+2. The existing provider implementation used a mock OpenAI-compatible upstream (`/v1/chat/completions`) rather than the observed PrivateGPT Model, Agent, and Conversation endpoints. It also fabricated Agent IDs.
+3. System messages were dropped before the provider boundary, tool payloads were silently ignored by the public request schema, raw upstream detail could be returned in error bodies, and the package entry point targeted a missing package.
+4. The confirmed text-flow boundaries are now implemented and covered by three unit tests. OAuth browser login, approved secure refresh-token storage, token refresh/retry, persistent Agent cache, diagnostics, and real OpenCode/PrivateGPT wire verification remain unimplemented or unverified because the official artifacts mark their contracts as open.
 
-## Planned Inventory
+## Conformance Verdict
 
-- File inventory: `rg --files`
-- Legacy keywords: old domain names, old mode names, old output artifact names, and obsolete validation tooling.
-- Project-specific paths: legacy service, verification, generated-data, and tool paths.
-
-## Inventory Findings
-
-- Source/runtime directories `src/`, `tests/`, and `verify/` are currently empty.
-- Legacy coupling was concentrated in official docs, grounding prompt lanes, root agent policy, workspace notes, schemas, and generated diagnostic artifacts.
-- Reusable assets retained: docs policy, grounding/methodology skills, task workspace workflow, metadata/taxonomy, sample eval structure, helper tools, and starter schema examples.
-- Removed or rewritten old project entrypoints so the repo no longer presents the previous application domain as the active source of truth.
-- Over-deletion audit restored reusable generic governance, template, QA, review, runbook, and grounding template content while keeping old domain artifacts deleted.
-
-## Commands Used
-
-```powershell
-rg --files
-rg -n --heading --smart-case "<legacy-domain-keyword-regex>" docs llm-wiki specs -g "*.md" -g "*.yaml" -g "*.json"
-rg -n --heading --smart-case "<legacy-domain-keyword-regex>" -g "!*.png" -g "!*.jpg" -g "!*.jpeg" -g "!*.zip" -g "!.git/**" -g "!llm-wiki/tasks/current/**"
-git status --short
-```
+`PARTIALLY_SYNCED`: the confirmed core API, Provider SPI, Agent mapping, tool boundary and SSE path now align with the requirement/C4. The MVP cannot be represented as complete until the remaining security and runtime-validation gates are resolved.
 
 ## Related
 
-- [TASK.md](./TASK.md)
-- [intake.md](./intake.md)
-- [verification-notes.md](./verification-notes.md)
+- [Task](./TASK.md)
+- [Intake](./intake.md)

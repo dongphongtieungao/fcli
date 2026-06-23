@@ -16,6 +16,8 @@ tests/*
 !tests/bdd/
 !tests/bdd/*.md
 !tests/bdd/*.py
+!tests/unit/
+!tests/unit/*.py
 script_emulation/
 templates/
 

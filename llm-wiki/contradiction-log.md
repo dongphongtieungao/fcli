@@ -1,20 +1,35 @@
 ---
-type: technical_note
-status: draft
-owner: unknown
-domain: workspace
+id: workspace-contradiction-log
+title: Workspace Contradiction Log
+type: contradiction_log
+category: workspace_contradiction
+status: observed
+owner: agent
+domain: privategpt-adapter
 project: fcli
+workspace: llm-wiki
 created: 2026-05-13
-updated: 2026-06-22
+updated: 2026-06-23
 sensitivity: internal
+truth_level: observed
+source_policy: workspace_only
+confidence: high
 source_of_truth:
   - docs/grounding/manifest.md
+verified_against:
+  - docs/grounding/manifest.yaml
+  - docs/grounding/sources.md
 related:
-  - index.md
-  - open-questions.md
+  - llm-wiki/index.md
+  - llm-wiki/open-questions.md
+  - llm-wiki/assumptions.md
+upstream:
+  - docs/grounding/manifest.md
+downstream:
+  - llm-wiki/tasks/current/
 tags:
-  - workspace
-  - contradictions
+  - workspace/contradiction
+  - risk/traceability
 ---
 
 # Contradiction Log
@@ -26,6 +41,8 @@ Record contradictions between user instructions, docs, tests, workspace notes, a
 ## Context
 
 This file is workspace-only. Official resolution belongs in `docs/` when confirmed.
+
+Record both conflicting sources, impact, decision owner, and resolution evidence. Do not silently select a winner or treat a row marked resolved as an official decision unless the resolution is reflected in the governing artifact.
 
 ## Contradictions
 

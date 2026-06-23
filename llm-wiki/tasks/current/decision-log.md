@@ -1,42 +1,58 @@
 ---
-type: decision_log
+id: task-sync-code-requirement-architecture-decisions
+title: Decision Log — Code and Documentation Synchronization
+type: task_memory
 status: draft
-owner: unknown
-domain: workspace
+owner: agent
+domain: privategpt-adapter
 project: fcli
-created: 2026-05-13
-updated: 2026-05-13
+created: 2026-06-23
+updated: 2026-06-23
 sensitivity: internal
 source_of_truth:
-  - AGENTS.md
-  - docs/grounding/skills/9.create-current-task.md
-  - docs/methodology/Task.md
+  - docs/01-requirements/00.requirement.md
+  - docs/02-architecture/04.architecture-c4.md
 related:
-  - TASK.md
-  - promotion.md
+  - llm-wiki/tasks/current/TASK.md
+  - llm-wiki/tasks/current/analysis.md
 tags:
   - workspace/task
   - decisions
 ---
 
-# Decision Log
+# Decision Log — Code and Documentation Synchronization
 
 ## Purpose
 
-Record decisions made during the repository cleanup task.
+Capture only decisions grounded in official artifacts, tests, or explicit user direction.
 
 ## Context
 
-No cleanup decisions have been made yet beyond creating this task workspace.
+### D-001 — Implement only observed PrivateGPT HTTP boundaries
 
-## Decisions
+Decision: replace the mock upstream with the Model discovery, Agent discovery/create/update, and Conversation SSE endpoints observed in the published Java plugin reference.
 
-| Date | Decision | Source | Impact |
-|---|---|---|---|
-| 2026-05-13 | Treat this as a shared / n/a project reset rather than a module-specific behavior change. | User request and `AGENTS.md` starter cleanup rules. | Cleanup must avoid pretending to change runtime behavior. |
-| 2026-05-13 | Inventory legacy references before deleting or rewriting files. | `docs/grounding/skills/9.create-current-task.md` and repository safety rules. | Reduces risk of removing reusable structure blindly. |
+Source: canonical requirement §2.5, FR004–FR010, Provider SPI appendix, and the cited plugin source.
+
+Impact: the local API and services remain Provider-SPI based; provider-specific endpoints remain isolated in `src/providers/privategpt.py`.
+
+### D-002 — Preserve request messages; keep a stable Agent instruction
+
+Decision: system/developer/user messages remain in the mapped conversation, while the workspace Agent uses the fixed OpenCode-compatible instruction profile.
+
+Source: FR006, FR008, Application Spec “Chat completion”.
+
+Impact: request context is not dropped and per-request system text does not mutate persistent Agent instructions.
+
+### D-003 — Do not implement unconfirmed OAuth or secure persistence
+
+Decision: keep access-token handling in memory and do not invent OAuth callback, token exchange, refresh, or OS credential-store behavior.
+
+Source: requirement §16 and Application Spec open questions.
+
+Impact: the product remains incomplete for login/refresh requirements; this is a tracked gate, not a silent fallback.
 
 ## Related
 
-- [TASK.md](./TASK.md)
-- [promotion.md](./promotion.md)
+- [Task](./TASK.md)
+- [Analysis](./analysis.md)

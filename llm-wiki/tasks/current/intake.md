@@ -1,73 +1,58 @@
 ---
-type: technical_note
-status: draft
-owner: unknown
-domain: workspace
+id: task-sync-code-requirement-architecture-intake
+title: Intake — Code and Documentation Synchronization
+type: task_memory
+status: synthesized
+owner: agent
+domain: privategpt-adapter
 project: fcli
-created: 2026-05-13
-updated: 2026-05-13
+created: 2026-06-23
+updated: 2026-06-23
 sensitivity: internal
 source_of_truth:
-  - AGENTS.md
-  - docs/grounding/skills/9.create-current-task.md
-  - docs/methodology/Task.md
+  - docs/01-requirements/00.requirement.md
+  - docs/02-architecture/04.architecture-c4.md
 related:
-  - TASK.md
-  - raw.md
-  - analysis.md
+  - llm-wiki/tasks/current/TASK.md
+  - llm-wiki/tasks/current/raw.md
 tags:
   - workspace/task
   - intake
 ---
 
-# Task Intake
+# Intake — Code and Documentation Synchronization
 
 ## Purpose
 
-Convert the raw request into an actionable cleanup brief.
+Turn the request into a traceable implementation brief.
+
+## Scope
+
+Current behavior: unknown pending source and test inventory.
+
+Requested change: assess and resolve drift between the implementation, requirement, and C4 design.
+
+Expected behavior: the application implements approved requirements through the documented architecture boundaries, with testable evidence.
+
+Impacted business flow: provider-bridge flow, pending confirmation from official artifacts.
+
+Files in scope: `src/`, `tests/`, relevant configuration, and task workspace records.
+
+Files out of scope: unapproved product behavior and external service deployment.
+
+Risk: high. The work can affect provider I/O, configuration, security boundaries, and user-visible streaming behavior.
+
+Acceptance criteria: every applicable requirement and C4 responsibility is mapped to code and evidence; identified gaps are implemented or explicitly reported as blocked by missing authoritative information or external dependencies.
+
+Verification plan: repository-defined targeted tests, lint/type checks if configured, contract validation, and smoke checks that do not require secrets or production services.
+
+Human decision needed: only if official sources conflict or require a product/architecture choice not resolved by evidence.
 
 ## Context
 
-This task starts a project reset. The existing repository contract still contains old domain-specific constraints, so cleanup must distinguish reusable process structure from old implementation and documentation.
-
-## Structured Brief
-
-Objective: Clean remaining legacy old-project content so the repo can become a starter structure for a new project.
-
-Task type: repository cleanup and documentation cleanup.
-
-Risk level: medium. Deleting old code/docs can remove useful starter scaffolding or violate documentation traceability if done without inventory.
-
-Impacted report model: shared / n/a.
-
-Artifact layer: workspace-only now; likely docs/KMS cleanup later if official docs are modified.
-
-Expected output: Cleaned repo plus evidence of remaining old-project references or confirmation that obvious references were removed.
-
-Likely sources to read:
-
-- `AGENTS.md`
-- `docs/AGENTS.md` if editing `docs/`
-- `docs/grounding/manifest.md`
-- `docs/grounding/manifest.yaml`
-- Repository file inventory from `rg --files`
-- Old-project reference scans for legacy domain terms, old mode names, and project-specific paths
-
-Verification expectation:
-
-- Run targeted `rg` scans before and after cleanup.
-- Report files deleted, edited, or left intentionally.
-- For Markdown edits, state normalization status and source links.
-- Do not claim runtime validation unless a runnable starter command exists and is executed.
-
-## Open Questions
-
-- Should legacy docs be removed entirely, moved to an archive, or converted into generic templates?
-- Should current root `AGENTS.md` remain project-specific until the new project is defined, or be generalized now?
-- What minimal starter code should remain?
+The user authorized implementation only to fulfill the two named official artifacts, not to introduce new business rules.
 
 ## Related
 
-- [TASK.md](./TASK.md)
-- [raw.md](./raw.md)
-- [analysis.md](./analysis.md)
+- [Task](./TASK.md)
+- [Raw Request](./raw.md)

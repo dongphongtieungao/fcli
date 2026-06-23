@@ -1,0 +1,1 @@
+"""OpenCode PrivateGPT Bridge package."""
