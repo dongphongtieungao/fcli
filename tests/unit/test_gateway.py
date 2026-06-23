@@ -8,8 +8,31 @@ from src.errors import BridgeError
 from src.providers.spi import AgentSyncRequest
 from src.schemas.openai import OpenAIChatRequest, OpenAIMessage
 from src.schemas.unified import AgentBinding, UnifiedChatResponse
+from src.services.agent_cache import AgentCache
 from src.services.agent_service import AgentService
 from src.services.gateway import GatewayPipeline
+
+
+class NoOpAgentCache(AgentCache):
+    """In-memory stub that never touches the filesystem."""
+
+    def __init__(self):
+        self._store: dict = {}
+
+    def load(self, workspace_key: str):
+        return self._store.get(workspace_key)
+
+    def save(self, binding) -> None:
+        self._store[binding.workspace_key] = binding
+
+    def delete(self, workspace_key: str) -> None:
+        self._store.pop(workspace_key, None)
+
+    def get_status(self, workspace_key: str) -> dict:
+        b = self._store.get(workspace_key)
+        if b is None:
+            return {"workspace_key": workspace_key, "status": "not_synced"}
+        return {"workspace_key": workspace_key, "status": "synced", "agent_id": b.agent_id}
 
 
 class FakeProvider:
@@ -44,7 +67,7 @@ def test_gateway_preserves_system_and_developer_messages():
     async def scenario():
         provider = FakeProvider()
         registry = FakeRegistry(provider)
-        gateway = GatewayPipeline(registry, AgentService(registry, "workspace"))
+        gateway = GatewayPipeline(registry, AgentService(registry, "workspace", agent_cache=NoOpAgentCache()))
         response = await gateway.execute_chat(
             OpenAIChatRequest(
                 model="gemini-2.5-pro",
@@ -66,7 +89,7 @@ def test_gateway_rejects_tool_payload_before_provider_call():
     async def scenario():
         provider = FakeProvider()
         registry = FakeRegistry(provider)
-        gateway = GatewayPipeline(registry, AgentService(registry, "workspace"))
+        gateway = GatewayPipeline(registry, AgentService(registry, "workspace", agent_cache=NoOpAgentCache()))
         with pytest.raises(BridgeError, match="Tool calling") as error:
             await gateway.execute_chat(
                 OpenAIChatRequest(
