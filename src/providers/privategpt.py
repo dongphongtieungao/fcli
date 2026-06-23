@@ -121,16 +121,18 @@ class PrivateGPTProvider(ProviderAdapter):
         for model in models:
             if not isinstance(model, dict):
                 continue
-            identifier = model.get("id") or model.get("model_id")
-            display_name = model.get("name") or model.get("display_name") or ""
+            # Java SupportedModel.java uses @SerializedName("model_id") and @SerializedName("display_name")
+            # There is no "id" or "name" field in the Java schema.
+            identifier = model.get("model_id")
+            display_name = model.get("display_name") or ""
             if identifier and (
                 identifier == self.public_model_id
                 or "gemini 2.5 pro" in str(display_name).lower()
                 or "gemini-2.5-pro" in str(identifier).lower()
             ):
                 self.internal_model_id = str(identifier)
-                logger.info("Resolved Gemini 2.5 Pro internal model id.")
-                return ProviderModel(id=self.internal_model_id, name="PrivateGPT Gemini 2.5 Pro")
+                logger.info("Resolved Gemini 2.5 Pro internal model id: %s", self.internal_model_id)
+                return ProviderModel(id=self.internal_model_id, name=display_name or "PrivateGPT Gemini 2.5 Pro")
         raise BridgeError(
             "model_not_available",
             "Gemini 2.5 Pro is not available from PrivateGPT.",
@@ -140,22 +142,35 @@ class PrivateGPTProvider(ProviderAdapter):
 
     async def ensure_agent(self, request: AgentSyncRequest) -> AgentBinding:
         try:
-            agents_response = await self.client.request(
-                "GET",
-                "/api/chat/v1/agents/discovery/created_by?offset=0&limit=50",
-                headers=self._get_headers(),
-            )
-            agents_data = agents_response.json()
-            agents = agents_data.get("items", []) if isinstance(agents_data, dict) else agents_data
-            if not isinstance(agents, list):
-                raise BridgeError(
-                    "agent_sync_failed",
-                    "PrivateGPT Agent discovery returned an invalid response.",
-                    502,
-                    "agent",
+            # Fetch all pages — mirrors AgentApiClientImpl.listMyAgents() pagination.
+            # Java fetches until page.getItems().size() < PAGE_SIZE (50).
+            # Without pagination, agents beyond page 1 (> 50) are invisible and
+            # the adapter would create a duplicate agent every startup.
+            all_agents: list[dict] = []
+            offset = 0
+            page_size = 50
+            while True:
+                resp = await self.client.request(
+                    "GET",
+                    f"/api/chat/v1/agents/discovery/created_by?offset={offset}&limit={page_size}",
+                    headers=self._get_headers(),
                 )
+                page_data = resp.json()
+                items = page_data.get("items", []) if isinstance(page_data, dict) else page_data
+                if not isinstance(items, list):
+                    raise BridgeError(
+                        "agent_sync_failed",
+                        "PrivateGPT Agent discovery returned an invalid response.",
+                        502,
+                        "agent",
+                    )
+                all_agents.extend(items)
+                if len(items) < page_size:
+                    break  # Last page reached
+                offset += page_size
+
             existing = next(
-                (a for a in agents if isinstance(a, dict) and a.get("name") == request.name),
+                (a for a in all_agents if isinstance(a, dict) and a.get("name") == request.name),
                 None,
             )
             payload: dict[str, Any] = {

@@ -155,23 +155,16 @@ resilience:
 
 
 def cmd_login(args) -> int:
-    """Open browser OAuth flow and save tokens securely."""
+    """Open browser Microsoft Entra ID PKCE login flow and save tokens securely."""
     from src.auth.token_manager import build_token_manager
 
-    base_url = os.getenv("PRIVATEGPT_BASE_URL")
-    if not base_url:
-        print("[login] ERROR: PRIVATEGPT_BASE_URL is not set.")
-        print("        Set it in your environment or config, e.g.:")
-        print("        $env:PRIVATEGPT_BASE_URL = 'https://privategpt.example.internal'")
-        return 1
-
-    manager = build_token_manager(base_url=base_url)
+    base_url = os.getenv("PRIVATEGPT_BASE_URL", "https://privategpt.fptconsulting.co.jp")
+    manager = build_token_manager(privategpt_origin=base_url)
     try:
-        manager.login(callback_timeout=180.0)
-        print("[login] Login successful. Token saved securely.")
+        manager.login(callback_timeout_seconds=300.0)
         return 0
     except TimeoutError:
-        print("[login] ERROR: No browser callback received within 180s.")
+        print("[login] ERROR: No browser callback received within 5 minutes.")
         return 1
     except RuntimeError as exc:
         print(f"[login] ERROR: {exc}")
@@ -198,17 +191,13 @@ def cmd_start(args) -> int:
 
     # Check auth
     if not settings.privategpt_access_token:
-        from src.auth.secure_store import build_token_store
         from src.auth.token_manager import build_token_manager
-
-        if settings.privategpt_base_url:
-            manager = build_token_manager(base_url=settings.privategpt_base_url)
-            if not manager.restore_from_store():
-                print("[start] Not logged in. Run: privategpt-adapter login")
-                return 1
-            print("[start] Session restored from secure store.")
-        else:
-            print("[start] WARNING: No PRIVATEGPT_BASE_URL set; cannot verify auth.")
+        origin = settings.privategpt_base_url or "https://privategpt.fptconsulting.co.jp"
+        manager = build_token_manager(privategpt_origin=origin)
+        if not manager.restore_from_store():
+            print("[start] Not logged in. Run: privategpt-adapter login")
+            return 1
+        print("[start] Session restored from secure store.")
 
     # Startup checks (non-blocking warnings, not hard failures pre-pilot)
     if _is_port_in_use(settings.host, settings.port):

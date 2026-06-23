@@ -18,7 +18,8 @@ def test_provider_uses_privategpt_model_agent_and_conversation_boundaries():
         async def handler(request: httpx.Request) -> httpx.Response:
             seen.append((request.method, request.url.path, request.content))
             if request.url.path.endswith("support-models"):
-                return httpx.Response(200, json=[{"id": "private-g25", "name": "Gemini 2.5 Pro"}])
+                # Java SupportedModel uses model_id and display_name (not id/name)
+                return httpx.Response(200, json=[{"model_id": "private-g25", "display_name": "Gemini 2.5 Pro"}])
             if request.url.path.endswith("discovery/created_by"):
                 return httpx.Response(200, json={"items": []})
             if request.url.path.endswith("/agents"):

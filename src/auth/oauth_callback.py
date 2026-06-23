@@ -1,14 +1,14 @@
-"""Local OAuth callback server.
+"""OAuth2 callback server for Microsoft Entra ID PKCE flow.
 
-Spins up a temporary HTTP server on localhost to receive the OAuth redirect
-after the user logs in via browser.  The server extracts the ``code``
-(and optional ``state``) query parameter, then shuts down.
+Mirrors OAuthCallbackServer.java from the Java plugin exactly:
 
-Usage::
+- Listens on localhost:7070 (matching REDIRECT_URI_LOGIN = "http://localhost:7070/auth")
+- /auth        → serves the fragment-capture HTML page (response_mode=fragment means
+                  the code arrives in the URL hash, not the query string; the JS page
+                  reads window.location.hash and redirects to /auth/code?code=...)
+- /auth/code   → extracts 'code' from query string, signals the caller, stops server
 
-    from src.auth.oauth_callback import wait_for_oauth_callback
-
-    code = wait_for_oauth_callback(port=9876, timeout=120)
+Timeout: 5 minutes (matching OAuthCallbackServer.java TIMEOUT_MINUTES = 5).
 """
 
 from __future__ import annotations
@@ -17,73 +17,133 @@ import logging
 import threading
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from typing import Callable
 
 logger = logging.getLogger(__name__)
 
+# Must match OAuthUrlBuilder.REDIRECT_URI_LOGIN
+CALLBACK_HOST = "localhost"
+CALLBACK_PORT = 7070
+CALLBACK_PATH = "/auth"
+TIMEOUT_MINUTES = 5
 
-class _CallbackHandler(BaseHTTPRequestHandler):
-    """Minimal handler that captures the OAuth redirect and signals the event."""
+# HTML page that reads the authorization code from the URL fragment and
+# redirects to /auth/code?code=... so the server can capture it via query string.
+# This replicates handleFragmentCapturePage() in OAuthCallbackServer.java.
+_FRAGMENT_CAPTURE_HTML = """\
+<!DOCTYPE html>
+<html>
+<head><title>PrivateGPT Adapter — Logging in…</title></head>
+<body>
+<p>Completing login, please wait…</p>
+<script>
+  var hash = window.location.hash.substring(1);
+  var params = new URLSearchParams(hash);
+  var code = params.get('code');
+  if (code) {
+    window.location.href = '/auth/code?code=' + encodeURIComponent(code);
+  } else {
+    document.body.innerText = 'Login failed: no code returned from identity provider.';
+  }
+</script>
+</body>
+</html>
+"""
+
+_SUCCESS_HTML = """\
+<html><body>
+<h2>Login successful!</h2>
+<p>You may close this tab and return to the terminal.</p>
+</body></html>
+"""
+
+_FAILURE_HTML = """\
+<html><body>Login failed: no authorization code in request.</body></html>
+"""
+
+
+class _Handler(BaseHTTPRequestHandler):
+    """Handles two paths: /auth (fragment capture page) and /auth/code (code receiver)."""
 
     def do_GET(self) -> None:  # noqa: N802
         parsed = urllib.parse.urlparse(self.path)
-        params = urllib.parse.parse_qs(parsed.query)
+        path = parsed.path
 
-        code = (params.get("code") or [None])[0]
-        error = (params.get("error") or [None])[0]
+        if path == "/auth":
+            self._serve_html(200, _FRAGMENT_CAPTURE_HTML)
+            return
 
-        self.server._oauth_code = code  # type: ignore[attr-defined]
-        self.server._oauth_error = error  # type: ignore[attr-defined]
+        if path == "/auth/code":
+            params = dict(urllib.parse.parse_qsl(parsed.query))
+            code = params.get("code")
+            if code:
+                self._serve_html(200, _SUCCESS_HTML)
+                # Signal the waiting thread — runs server shutdown in background
+                self.server._received_code = code  # type: ignore[attr-defined]
+                threading.Thread(target=self.server.shutdown, daemon=True).start()
+            else:
+                self._serve_html(400, _FAILURE_HTML)
+            return
 
-        if code:
-            body = b"<html><body><h2>Login successful!</h2><p>You can close this tab and return to the terminal.</p></body></html>"
-            self.send_response(200)
-        else:
-            body = f"<html><body><h2>Login failed</h2><p>{error or 'unknown error'}</p></body></html>".encode()
-            self.send_response(400)
+        self._serve_html(404, "<html><body>Not found.</body></html>")
 
-        self.send_header("Content-Type", "text/html; charset=utf-8")
+    def _serve_html(self, status: int, html: str) -> None:
+        body = html.encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "text/html; charset=UTF-8")
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
 
-        # Signal the waiting thread to shut the server down.
-        threading.Thread(target=self.server.shutdown, daemon=True).start()
-
     def log_message(self, fmt: str, *args: object) -> None:  # noqa: D401
-        # Route to our logger instead of stderr.
         logger.debug("OAuth callback: " + fmt, *args)
 
 
-def wait_for_oauth_callback(port: int = 9876, timeout: float = 180.0) -> str:
-    """Block until OAuth redirect arrives or timeout expires.
+def wait_for_authorization_code(
+    timeout_seconds: float = TIMEOUT_MINUTES * 60,
+) -> str:
+    """Start callback server and block until the authorization code arrives.
+
+    The Microsoft Entra ID authorize endpoint uses response_mode=fragment,
+    meaning the code is in the URL hash. The /auth page serves a JS snippet
+    that reads the hash and calls /auth/code?code=... so the server can
+    extract it from the query string.
 
     Args:
-        port: localhost port to listen on (must match the registered redirect URI).
-        timeout: seconds to wait before raising ``TimeoutError``.
+        timeout_seconds: How long to wait before giving up.
 
     Returns:
-        The authorization ``code`` string.
+        The authorization code string.
 
     Raises:
-        TimeoutError: if no callback is received within ``timeout`` seconds.
-        RuntimeError: if the OAuth provider returned an error parameter.
+        TimeoutError: if no code arrives within timeout_seconds.
     """
-    server = HTTPServer(("127.0.0.1", port), _CallbackHandler)
-    server._oauth_code = None  # type: ignore[attr-defined]
-    server._oauth_error = None  # type: ignore[attr-defined]
-    server.timeout = timeout
+    server = HTTPServer((CALLBACK_HOST, CALLBACK_PORT), _Handler)
+    server._received_code = None  # type: ignore[attr-defined]
 
-    logger.debug("OAuth callback server listening on 127.0.0.1:%d", port)
-    server.handle_request()  # blocks until one request or timeout
+    # Run the server in a background thread; main thread waits on an event.
+    done_event = threading.Event()
 
-    error = server._oauth_error  # type: ignore[attr-defined]
-    code = server._oauth_code  # type: ignore[attr-defined]
+    def _serve():
+        # serve_forever() blocks until shutdown() is called
+        server.serve_forever(poll_interval=0.25)
+        done_event.set()
 
-    if error:
-        raise RuntimeError(f"OAuth provider returned error: {error}")
-    if not code:
+    t = threading.Thread(target=_serve, daemon=True)
+    t.start()
+    logger.info("OAuth callback server started on %s:%d", CALLBACK_HOST, CALLBACK_PORT)
+
+    # Wait for code or timeout
+    finished = done_event.wait(timeout=timeout_seconds)
+
+    code = server._received_code  # type: ignore[attr-defined]
+
+    if not finished or not code:
+        server.shutdown()
         raise TimeoutError(
-            f"No OAuth callback received within {timeout:.0f}s. "
-            "Make sure the redirect URI is registered as http://127.0.0.1:{port}/callback."
+            f"No OAuth callback received within {timeout_seconds:.0f}s. "
+            f"Make sure the browser opened and you completed login."
         )
+
+    logger.info("Authorization code received.")
     return code

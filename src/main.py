@@ -25,16 +25,14 @@ def create_app(settings: BridgeSettings | None = None) -> FastAPI:
 
     configure_logging(level="INFO", redact_prompt=True)
 
-    # Auth — build OAuthTokenManager when a base URL is available.
-    if settings.privategpt_base_url:
-        oauth_manager = build_token_manager(
-            base_url=settings.privategpt_base_url,
-            initial_access_token=settings.privategpt_access_token,
-        )
-        token_provider = oauth_manager.token_state
-    else:
-        oauth_manager = None
-        token_provider = InMemoryAccessTokenProvider(settings.privategpt_access_token)
+    # Auth — build OAuthTokenManager using exact Microsoft Entra ID constants from Java plugin.
+    # privategpt_origin is used as Origin/Referer headers in token requests (matches Java plugin).
+    privategpt_origin = settings.privategpt_base_url or "https://privategpt.fptconsulting.co.jp"
+    oauth_manager = build_token_manager(
+        privategpt_origin=privategpt_origin,
+        initial_access_token=settings.privategpt_access_token,
+    )
+    token_provider = oauth_manager.token_state
 
     privategpt_provider = PrivateGPTProvider(settings, token_provider, oauth_manager)
     registry = ProviderRegistry(privategpt_provider)
